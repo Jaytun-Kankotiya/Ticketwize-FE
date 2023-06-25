@@ -28,8 +28,8 @@ export default () => {
                   <AddressLine>40 Gates Court</AddressLine>
                   <AddressLine>Endicott, NY 13760</AddressLine>
                 </Address>
-                <Email>contact@treact.com</Email>
-                <Phone>+1 (203) 991-6988</Phone>
+                <Email>contact@eventos.com</Email>
+                <Phone>+1 (519) 991-4007</Phone>
               </>
             )
           },

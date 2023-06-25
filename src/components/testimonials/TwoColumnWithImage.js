@@ -69,6 +69,7 @@ const DecoratorBlob2 = tw(
   SvgDecoratorBlob2
 )`absolute w-32 bottom-0 right-0 -z-10 text-pink-500 opacity-15 transform translate-x-2/3 translate-y-8`;
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
   /*
    * You can modify the testimonials shown by modifying the array below
@@ -102,7 +103,7 @@ export default () => {
   ];
   return (
     <Container>
-      <Content>
+      {/* <Content>
         <HeadingInfoContainer>
           <HeadingTitle>Our Awesome Customers</HeadingTitle>
           <HeadingDescription></HeadingDescription>
@@ -131,7 +132,7 @@ export default () => {
         </TestimonialSliderContainer>
       </Content>
       <DecoratorBlob1 />
-      <DecoratorBlob2 />
+      <DecoratorBlob2 /> */}
     </Container>
   );
 };

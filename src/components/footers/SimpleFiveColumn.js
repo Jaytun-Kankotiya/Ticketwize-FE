@@ -3,7 +3,7 @@ import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 
-import LogoImage from "../../images/logo.svg";
+import LogoImage from "../../images/logoblack.svg";
 import { ReactComponent as FacebookIcon } from "../../images/facebook-icon.svg";
 import { ReactComponent as TwitterIcon } from "../../images/twitter-icon.svg";
 import { ReactComponent as YoutubeIcon } from "../../images/youtube-icon.svg";
@@ -34,6 +34,7 @@ const SocialLink = styled.a`
   }
 `;
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
   return (
     <Container>
@@ -41,10 +42,10 @@ export default () => {
         <WideColumn>
           <LogoContainer>
             <LogoImg src={LogoImage} />
-            <LogoText>Treact Inc.</LogoText>
+            <LogoText>Eventos</LogoText>
           </LogoContainer>
           <CompanyDescription>
-            Treact is an Internet Technology company providing design resources such as website templates and themes.
+            Eventos is an Internet Technology company providing design resources such as website templates and themes.
           </CompanyDescription>
           <SocialLinksContainer>
             <SocialLink href="https://facebook.com">
@@ -58,7 +59,7 @@ export default () => {
             </SocialLink>
           </SocialLinksContainer>
         </WideColumn>
-        <Column>
+        {/* <Column>
           <ColumnHeading>Quick Links</ColumnHeading>
           <LinkList>
             <LinkListItem>
@@ -108,7 +109,7 @@ export default () => {
               <Link href="#">Disclaimer</Link>
             </LinkListItem>
           </LinkList>
-        </Column>
+        </Column> */}
       </FiveColumns>
     </Container>
   );
