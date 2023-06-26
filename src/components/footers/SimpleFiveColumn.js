@@ -14,12 +14,6 @@ const FiveColumns = tw.div`max-w-screen-xl mx-auto py-16 lg:py-20 flex flex-wrap
 const Column = tw.div`md:w-1/5`;
 const WideColumn = tw(Column)`text-center md:text-left w-full md:w-2/5 mb-10 md:mb-0`;
 
-const ColumnHeading = tw.h5`font-bold`;
-
-const LinkList = tw.ul`mt-4 text-sm font-medium`;
-const LinkListItem = tw.li`mt-3`;
-const Link = tw.a`border-b-2 border-transparent hocus:text-primary-500 hocus:border-primary-500 pb-1 transition duration-300`;
-
 const LogoContainer = tw.div`flex items-center justify-center md:justify-start`;
 const LogoImg = tw.img`w-8`;
 const LogoText = tw.h5`ml-2 text-xl font-black text-primary-500`;

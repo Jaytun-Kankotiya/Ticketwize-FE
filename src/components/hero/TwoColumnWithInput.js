@@ -45,6 +45,7 @@ const CustomersLogoStrip = styled.div`
   }
 `;
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default ({ roundedHeaderButton }) => {
   return (
     <>

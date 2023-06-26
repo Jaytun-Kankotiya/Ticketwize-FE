@@ -12,13 +12,12 @@ export default function App() {
   // If you want to disable the animation just use the disabled `prop` like below on your page's component
   // return <AnimationRevealPage disabled>xxxxxxxxxx</AnimationRevealPage>;
 
-
   return (
     <>
       <GlobalStyles />
       <Router>
         <Routes>
-          <Route path="/components/:type/:subtype/:name" element={<ComponentRenderer />} />
+          <Route path="/components/:type/:subtype/:name/:event_id" element={<ComponentRenderer />} />
           <Route path="/components/:type/:name" element={<ComponentRenderer />} />
           {/* <Route path="/thank-you" element={<ThankYouPage />} /> */}
         </Routes>
