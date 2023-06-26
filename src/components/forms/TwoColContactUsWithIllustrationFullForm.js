@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
-import { css } from "styled-components/macro"; //eslint-disable-line
 import { SectionHeading, Subheading as SubheadingBase } from "./../misc/Headings.js";
 import { PrimaryButton as PrimaryButtonBase } from "./../misc/Buttons.js";
 import EmailIllustrationSrc from "./../../images/email-illustration.svg";
@@ -22,29 +21,32 @@ const Image = styled.div(props => [
 const TextContent = tw.div`lg:py-8 text-center md:text-left`;
 
 const Subheading = tw(SubheadingBase)`text-center md:text-left`;
-const Heading = tw(SectionHeading)`mt-4 font-black text-left text-3xl sm:text-4xl lg:text-5xl text-center md:text-left leading-tight`;
+const Heading = tw(SectionHeading)`mt-4 text-gray-700  font-black text-left text-3xl sm:text-4xl lg:text-5xl text-center md:text-left leading-tight`;
 const Description = tw.p`mt-4 text-center md:text-left text-sm md:text-base lg:text-lg font-medium leading-relaxed text-secondary-100`
 
 const Form = tw.form`mt-8 md:mt-10 text-sm flex flex-col max-w-sm mx-auto md:mx-0`
 const Input = tw.input`mt-6 first:mt-0 border-b-2 py-3 focus:outline-none font-medium transition duration-300 hocus:border-primary-500`
-const Textarea = styled(Input).attrs({as: "textarea"})`
+
+const Textarea = styled(Input).attrs({ as: "textarea" })`
   ${tw`h-24`}
+`
+const Select = styled(Input).attrs({ as: "select" })`
+${tw`h-24`}
 `
 
 const SubmitButton = tw(PrimaryButtonBase)`inline-block mt-8`
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default ({
-  subheading = "Contact Us",
-  heading = <>Feel free to <span tw="text-primary-500">get in touch</span><wbr/> with us.</>,
+  subheading = "Reserve Seats",
+  heading = <>Please Fill Below Form and <span tw="text-primary-500">Confirm your Seats</span><wbr /> with us.</>,
   description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  submitButtonText = "Send",
+  submitButtonText = "Confirm Reservation",
   formAction = "#",
   formMethod = "get",
   textOnLeft = true,
 }) => {
   // The textOnLeft boolean prop can be used to display either the text on left or right side of the image.
-
   return (
     <Container>
       <TwoColumn>
@@ -57,11 +59,24 @@ export default ({
             <Heading>{heading}</Heading>
             {description && <Description>{description}</Description>}
             <Form action={formAction} method={formMethod}>
-              <Input type="email" name="email" placeholder="Your Email Address" />
-              <Input type="text" name="name" placeholder="Full Name" />
-              <Input type="text" name="subject" placeholder="Subject" />
-              <Textarea name="message" placeholder="Your Message Here" />
+              <Input type="email" name="email" placeholder="Your Email Address" required />
+              <Input type="text" name="first_name" placeholder="First Name" required />
+              <Input type="text" name="last_name" placeholder="Last Name" required />
+              <Input type="text" name="phone" placeholder="Contact No" pattern="[1-9]{1}[0-9]{9}" required />
+
+              <Select name="gender" required>
+                <option value="">Please Select Geneder…</option>
+                <option value="female">Female</option>
+                <option value="male">Male</option>
+                <option value="other">Other</option>
+                <option value="Prefer not to answer">Perfer not to Answer</option>
+              </Select>
+              <Input type="date" id="dob" name="dob" required/>
+              <Input type="number" name="seatcount" placeholder="No Of Seats" min="1" required />
+
+              {/* <Textarea name="message" placeholder="Your Message Here" /> */}
               <SubmitButton type="submit">{submitButtonText}</SubmitButton>
+             
             </Form>
           </TextContent>
         </TextColumn>
