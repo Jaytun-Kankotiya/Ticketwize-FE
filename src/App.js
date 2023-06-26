@@ -18,6 +18,7 @@ export default function App() {
       <Router>
         <Routes>
           <Route path="/components/:type/:subtype/:name/:event_id" element={<ComponentRenderer />} />
+          <Route path="/components/:type/:subtype/:name" element={<ComponentRenderer />} />
           <Route path="/components/:type/:name" element={<ComponentRenderer />} />
           {/* <Route path="/thank-you" element={<ThankYouPage />} /> */}
         </Routes>

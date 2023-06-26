@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import axios from "axios";
-import Header, { NavLink, LogoLink, NavToggle, DesktopNavLinks } from "../headers/light.js";
+import { withRouter } from 'react-router-dom';
+import Header, { NavLink, LogoLink, PrimaryLink, NavToggle, DesktopNavLinks } from "../headers/light.js";
 const BaseURL = "http://127.0.0.1:8000";
 const StyledHeader = styled(Header)`
   ${tw`pt-8 max-w-none w-full`}
@@ -36,17 +37,21 @@ const PrimaryAction = tw.button`rounded-full px-8 py-3 mt-10 text-sm sm:text-bas
 // eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
 
-  // const [eventName, setEventName] = React.useState(null);
-  // useEffect(() => {
-  //   axios.post(BaseURL + '/api/v1/event/register')
-  //     .then(function (response) {
-  //       console.log(response);
-  //       setEventName(response.data);
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
-  // }, [])
+  // const params = useSearchParams();
+  // const queryParams = queryString.parse(params.search);
+  // console.log("46-----", queryParams);
+  // eslint-disable-next-line no-undef
+
+  const [event, setEventDetails] = React.useState(null);
+  useEffect(() => {
+    axios.get(BaseURL + '/api/v1/event/fetch?event_id=f34ccf99-8963-476b-90f5-8d81b6963a4d')
+      .then(function (response) {
+        setEventDetails(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, [])
   const navLinks = [
     // <NavLinks key={1}>
     //   <NavLink href="#">
@@ -68,21 +73,21 @@ export default () => {
     //   </PrimaryLink>
     // </NavLinks>
   ];
-  if (true) {
+  if (event) {
     return (
       // call the API
       <Container>
         <OpacityOverlay />
         <HeroContainer>
-          <StyledHeader links={navLinks} />
+
           <Content>
             <Heading>
-              Garaba Night
-              <br />
-              with Aishwariya Mazmoodar
+              {event.response.title}
             </Heading>
-
+            {/* /components/blocks/Form/TwoColContactUsFull */}
+            <NavLink  href="/components/blocks/Form/TwoColContactUsFull">
             <PrimaryAction>Reserve Seat</PrimaryAction>
+            </NavLink>
           </Content>
         </HeroContainer>
       </Container>

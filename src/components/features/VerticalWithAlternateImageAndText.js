@@ -51,7 +51,6 @@ export default()=> {
   useEffect(() => {
     axios.get(BaseURL+'/api/v1/event/fetch?event_id=f34ccf99-8963-476b-90f5-8d81b6963a4d')
   .then(function (response) {
-    console.log(response);
     setEventDetails(response.data);
   })
   .catch(function (error) {
