@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import tw from "twin.macro";
+import axios from "axios";
 import styled from "styled-components";
 import { SectionHeading, Subheading as SubheadingBase } from "./../misc/Headings.js";
 import { PrimaryButton as PrimaryButtonBase } from "./../misc/Buttons.js";
 import EmailIllustrationSrc from "./../../images/email-illustration.svg";
-
+const BaseURL = "http://127.0.0.1:8000";
+const FormData = require('form-data');
+let data = new FormData();
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24`;
 const Column = tw.div`w-full max-w-md mx-auto md:max-w-none md:mx-0`;
@@ -26,6 +29,7 @@ const Description = tw.p`mt-4 text-center md:text-left text-sm md:text-base lg:t
 
 const Form = tw.form`mt-8 md:mt-10 text-sm flex flex-col max-w-sm mx-auto md:mx-0`
 const Input = tw.input`mt-6 first:mt-0 border-b-2 py-3 focus:outline-none font-medium transition duration-300 hocus:border-primary-500`
+// const H1 = tw.input`mt-6 first:mt-0 focus:outline-none font-medium transition duration-300 hocus:border-primary-500`
 
 const Textarea = styled(Input).attrs({ as: "textarea" })`
   ${tw`h-24`}
@@ -41,12 +45,94 @@ export default ({
   subheading = "Reserve Seats",
   heading = <>Please Fill Below Form and <span tw="text-primary-500">Confirm your Seats</span><wbr /> with us.</>,
   description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  submitButtonText = "Confirm Reservation",
-  formAction = "#",
-  formMethod = "get",
+  submitButtonText = "Checkout",
+  formAction = "success",
+  formMethod = "post",
   textOnLeft = true,
 }) => {
+
+  const [paymentConfig, setPaymentConfig] = React.useState(null);
+  const [totalPrice, setTotalPrice] = React.useState(0);
+  useEffect(() => {
+    axios.get(BaseURL+'/api/v1/payment/fetch/payment_config')
+  .then(function (response) {
+    setPaymentConfig(response.data);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+  }, [])
+  if(paymentConfig){
+    var additionalCharges = paymentConfig.response.total_additional_charges
+  }
+
+  const [eventData, setEventDetails] = React.useState(null);
+  useEffect(() => {
+    axios.get(BaseURL + '/api/v1/event/fetch?event_id=f34ccf99-8963-476b-90f5-8d81b6963a4d')
+      .then(function (response) {
+        setEventDetails(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, [])
+  const handleChange = (event) => {
+    const value = event.target.value;
+    setTotalPrice(value*eventData.response.price)
+  };
+  const handleClick = () => {
+    let data = new FormData();
+    data.append('event_id', 'f34ccf99-8963-476b-90f5-8d81b6963a4d');
+    data.append('no_of_tickets', '5');
+    data.append('first_name', 'Ravin');
+    data.append('last_name', 'Rakholiya');
+    data.append('email', 'ravinkumarrakh@gmail.com');
+    data.append('contact_number', '5199914007');
+    data.append('dob', '1998-06-22');
+    data.append('gender', 'M');
+    let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: BaseURL+'/api/v1/event/register',
+      headers: {"Content-Type":"application/json"},
+      data : data
+    };
+    axios.request(config)
+    .then((response) => {
+      console.log(JSON.stringify(response.data));
+      if(response.ok) return response.json()
+      return response.json().then(json => Promise.reject(json))
+    })
+    .then(({url}) =>{
+      window.location = url
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+
+  //   fetch(BaseURL+"/api/v1/event/register", {
+  //     method: "POST",
+  //     headers: {"Content-Type":"application/json"},
+  //     mode: "cors",
+  //     body: JSON.stringify({
+  //       items: [
+  //         {}
+  //       ]
+  //     })
+  //   })
+  //   .then(res => {
+  //     if (res.ok) return res.json()
+  //     return res.json().then(json => Promise.reject(json))
+  //   })
+    
+  //   .catch(e => {
+  //     console.log(e.error)
+  //   })
+  }
   // The textOnLeft boolean prop can be used to display either the text on left or right side of the image.
+  if(additionalCharges && eventData){
+    
   return (
     <Container>
       <TwoColumn>
@@ -72,15 +158,16 @@ export default ({
                 <option value="Prefer not to answer">Perfer not to Answer</option>
               </Select>
               <Input type="date" id="dob" name="dob" required/>
-              <Input type="number" name="seatcount" placeholder="No Of Seats" min="1" required />
-
+              <Input type="number" name="seatcount" placeholder="No Of Seats" min="1"  onChange={handleChange} required />
+              <br />
+              <TextContent> Price: {totalPrice}<br />Service Charge: {paymentConfig.response.service_fee}% <br />Payment Gateway Charge: {paymentConfig.response.payment_fee}% <br />Total Price: {totalPrice+((additionalCharges)*(totalPrice)/100)}</TextContent>
               {/* <Textarea name="message" placeholder="Your Message Here" /> */}
-              <SubmitButton type="submit">{submitButtonText}</SubmitButton>
+              <SubmitButton type="submit" onClick={handleClick}>{submitButtonText} </SubmitButton>
              
             </Form>
           </TextContent>
         </TextColumn>
       </TwoColumn>
     </Container>
-  );
+  );}
 };

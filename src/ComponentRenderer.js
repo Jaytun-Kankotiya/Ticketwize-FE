@@ -68,7 +68,8 @@ import FiveColumnWithBackgroundFooter from "./components/footers/FiveColumnWithB
 import FiveColumnDarkFooter from "./components/footers/FiveColumnDark.js";
 import MiniCenteredFooter from "./components/footers/MiniCenteredFooter.js";
 
-
+import PaymentSuccess from "./components/payment/PaymentSuccess.js"
+import PaymentCancle from "./components/payment/PaymentCancle.js"
 export const components = {
   landingPages: {
     EventLandingPage: {
@@ -76,14 +77,14 @@ export const components = {
       imageSrc: EventLandingPageImageSrc,
       url: "/components/landingPages/EventLandingPage",
     },
-  
+
   },
 
   innerPages: {
-    
-   
-   
-    
+
+
+
+
   },
 
   blocks: {
@@ -155,7 +156,7 @@ export const components = {
           component: ThreeColWithSideImageFeatures,
           url: "/components/blocks/Features/ThreeColWithSideImage",
         },
-         TwoColWithButton: {
+        TwoColWithButton: {
           name: "Two Column With Image and Action Button",
           component: TwoColWithButtonFeatures,
           url: "/components/blocks/Features/TwoColWithButton",
@@ -272,7 +273,7 @@ export const components = {
           component: ThreeColSimpleWithImageAndDashedBorderBlog,
           url: "/components/blocks/Blog/ThreeColSimpleWithImageAndDashedBorder",
         },
-      } 
+      }
     },
 
     Testimonial: {
@@ -326,7 +327,21 @@ export const components = {
         },
       }
     },
-
+    Payment: {
+      type: "Payment Status",
+      elements: {
+        PaymentSuccess: {
+          name: "Payment Successful",
+          component: PaymentSuccess,
+          url: "/components/blocks/Payment/PaymentSuccess"
+        },
+        PaymentCancle: {
+          name: "Payment Cancle",
+          component: PaymentCancle,
+          url: "/components/blocks/Payment/PaymentCancle"
+        }
+      }
+    },
     Form: {
       type: "Forms Section",
       elements: {
@@ -413,17 +428,18 @@ export default () => {
 
   try {
     let Component = null;
-    if(type === "blocks" && subtype) {
-      Component= components[type][subtype]["elements"][name].component
+    if (type === "blocks" && subtype) {
+      Component = components[type][subtype]["elements"][name].component
       return <AnimationRevealPage disabled>
-          <Component/>
-        </AnimationRevealPage>
+        <Component />
+      </AnimationRevealPage>
     }
-    else
-      Component= components[type][name].component
+    else {
+      Component = components[type][name].component
+    }
 
-    if(Component)
-      return <Component/>
+    if (Component)
+      return <Component />
 
     throw new Error("Component Not Found")
   }

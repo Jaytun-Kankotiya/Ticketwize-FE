@@ -52,27 +52,7 @@ export default () => {
         console.log(error);
       });
   }, [])
-  const navLinks = [
-    // <NavLinks key={1}>
-    //   <NavLink href="#">
-    //     About
-    //   </NavLink>
-    //   <NavLink href="#">
-    //     Blog
-    //   </NavLink>
-    //   <NavLink href="#">
-    //     Locations
-    //   </NavLink>
-    //   <NavLink href="#">
-    //     Pricing
-    //   </NavLink>
-    // </NavLinks>,
-    // <NavLinks key={2}>
-    //   <PrimaryLink href="/#">
-    //     Hire Us
-    //   </PrimaryLink>
-    // </NavLinks>
-  ];
+
   if (event) {
     return (
       // call the API
