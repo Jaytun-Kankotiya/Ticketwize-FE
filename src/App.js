@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, {useEffect, useState} from "react";
 import GlobalStyles from './styles/GlobalStyles';
 
 import ComponentRenderer from "./ComponentRenderer.js";
@@ -8,10 +8,28 @@ import ComponentRenderer from "./ComponentRenderer.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 
+const Message = ({ message}) => {
+  <section>
+    <p> {message} </p>
+  </section>
+}
+
+
 export default function App() {
   // If you want to disable the animation just use the disabled `prop` like below on your page's component
   // return <AnimationRevealPage disabled>xxxxxxxxxx</AnimationRevealPage>;
+  const [message, setMessage] = useState('');
 
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+    if(query.get('success')){
+      setMessage("Ticket Booked Successfully! You will receive the mail confirmation.")
+    }
+    if(query.get('canceled')){
+      setMessage("Order Canceled - Continue to book around and checkout when you're ready.")
+    };
+    
+  }, []);
   return (
     <>
       <GlobalStyles />

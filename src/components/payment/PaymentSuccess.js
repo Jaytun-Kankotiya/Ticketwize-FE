@@ -15,15 +15,15 @@ const StatsContainer = tw.div`mt-8 flex flex-col sm:flex-row items-center justif
 // eslint-disable-next-line import/no-anonymous-default-export
 export default ({
   subheading = "",
-  description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  description = "See you soon...",
 }) => {
   return (
     <Container>
       <ContentWithPaddingXl>
         <HeadingContainer>
           {subheading && <Subheading>{subheading}</Subheading>}
-          <Heading>Payment Successful</Heading>
-          {description && <Description>Thanks you. See you soon...</Description>}
+          <Heading>Tickets Booked Successfully! You will receive the mail confirmation.</Heading>
+          {description && <Description> See you soon...</Description>}
         </HeadingContainer>
         <StatsContainer>
           

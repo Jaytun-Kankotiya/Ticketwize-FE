@@ -22,7 +22,7 @@ export default ({
       <ContentWithPaddingXl>
         <HeadingContainer>
           {subheading && <Subheading>{subheading}</Subheading>}
-          <Heading>Payment Cancelled</Heading>
+          <Heading>Ticket Booking Canceled - Continue to book around and checkout when you're ready.</Heading>
           {description && <Description>Sorry for the inconvience...</Description>}
         </HeadingContainer>
         <StatsContainer>

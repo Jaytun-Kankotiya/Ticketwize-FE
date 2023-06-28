@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import tw from "twin.macro";
 import axios from "axios";
 import styled from "styled-components";
@@ -46,13 +46,14 @@ export default ({
   heading = <>Please Fill Below Form and <span tw="text-primary-500">Confirm your Seats</span><wbr /> with us.</>,
   description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   submitButtonText = "Checkout",
-  formAction = "#",
-  formMethod = "get",
+  formAction = BaseURL+'/api/v1/event/register',
+  formMethod = "POST",
   textOnLeft = true,
 }) => {
-
+  let value = 0;
   const [paymentConfig, setPaymentConfig] = React.useState(null);
   const [totalPrice, setTotalPrice] = React.useState(0);
+  const [noOfTickets, setnoOfTickets] = React.useState(1);
   useEffect(() => {
     axios.get(BaseURL+'/api/v1/payment/fetch/payment_config')
   .then(function (response) {
@@ -77,12 +78,28 @@ export default ({
       });
   }, [])
   const handleChange = (event) => {
-    const value = event.target.value;
+    value = event.target.value;
+    setnoOfTickets(value)
+    additionalCharges = value*additionalCharges
     setTotalPrice(value*eventData.response.price)
   };
+
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+    if(query.get('success')){
+      setMessage("Ticket Booked Successfully! You will receive the mail confirmation.")
+    }
+    if(query.get('canceled')){
+      setMessage("Order Canceled - Continue to book around and checkout when you're ready.")
+    };
+    
+  }, []);
+
   const checkout = () => {
     let data = new FormData();
-    data.append('event_id', 'f34ccf99-8963-476b-90f5-8d81b6963a4d');
+    data.append('event_id', 1);
     data.append('no_of_tickets', '5');
     data.append('first_name', 'Ravin');
     data.append('last_name', 'Rakholiya');
@@ -110,10 +127,17 @@ export default ({
       console.log(error);
     });
   }
+  const Message = ({ message}) => {
+    <section>
+      <p> {message} </p>
+    </section>
+  }
   // The textOnLeft boolean prop can be used to display either the text on left or right side of the image.
   if(additionalCharges && eventData){
     
-  return (
+
+
+  return message ? <Message>message = {message}</Message>: (
     <Container>
       <TwoColumn>
         <ImageColumn>
@@ -140,9 +164,9 @@ export default ({
               <Input type="date" id="dob" name="dob" required/>
               <Input type="number" name="seatcount" placeholder="No Of Seats" min="1"  onChange={handleChange} required />
               <br />
-              <TextContent> Price: {totalPrice}<br />Service Charge: {paymentConfig.response.service_fee}% <br />Payment Gateway Charge: {paymentConfig.response.payment_fee}% <br />Total Price: {totalPrice+((additionalCharges)*(totalPrice)/100)}</TextContent>
+              <TextContent> Price: {eventData.response.price}$ x {noOfTickets}<br />Service Charge: {paymentConfig.response.service_fee}% x {noOfTickets} <br />Payment Gateway Charge: {paymentConfig.response.payment_fee}% x {noOfTickets} <br />Total Price: {totalPrice+((additionalCharges)*(totalPrice)/100)}$</TextContent>
               {/* <Textarea name="message" placeholder="Your Message Here" /> */}
-              <SubmitButton type="submit" onClick={checkout}>{submitButtonText} </SubmitButton>
+              <SubmitButton type="submit" >{submitButtonText} </SubmitButton>
              
             </Form>
           </TextContent>
