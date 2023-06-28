@@ -11,29 +11,11 @@ const Subheading = tw(SubheadingBase)`text-gray-100 text-center`;
 const Description = tw(SectionDescription)`text-gray-400 text-center mx-auto max-w-screen-md`;
 
 const StatsContainer = tw.div`mt-8 flex flex-col sm:flex-row items-center justify-center flex-wrap max-w-screen-md justify-between mx-auto`
-const Stat = tw.div`flex flex-col text-center p-4 tracking-wide`
-const StatKey = tw.div`text-xl font-medium`
-const StatValue = tw.div`text-4xl sm:text-3xl md:text-4xl lg:text-5xl font-black`
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default ({
   subheading = "",
-  heading = "Over 9000 Projects Completed",
   description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  stats = [
-    {
-      key: "Clients",
-      value: "2500+",
-    },
-    {
-      key: "Revenue",
-      value: "$100M+",
-    },
-    {
-      key: "Employees",
-      value: "150+",
-    },
-  ]
 }) => {
   return (
     <Container>

@@ -46,8 +46,8 @@ export default ({
   heading = <>Please Fill Below Form and <span tw="text-primary-500">Confirm your Seats</span><wbr /> with us.</>,
   description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   submitButtonText = "Checkout",
-  formAction = "success",
-  formMethod = "post",
+  formAction = "#",
+  formMethod = "get",
   textOnLeft = true,
 }) => {
 
@@ -80,7 +80,7 @@ export default ({
     const value = event.target.value;
     setTotalPrice(value*eventData.response.price)
   };
-  const handleClick = () => {
+  const checkout = () => {
     let data = new FormData();
     data.append('event_id', 'f34ccf99-8963-476b-90f5-8d81b6963a4d');
     data.append('no_of_tickets', '5');
@@ -109,26 +109,6 @@ export default ({
     .catch((error) => {
       console.log(error);
     });
-
-
-  //   fetch(BaseURL+"/api/v1/event/register", {
-  //     method: "POST",
-  //     headers: {"Content-Type":"application/json"},
-  //     mode: "cors",
-  //     body: JSON.stringify({
-  //       items: [
-  //         {}
-  //       ]
-  //     })
-  //   })
-  //   .then(res => {
-  //     if (res.ok) return res.json()
-  //     return res.json().then(json => Promise.reject(json))
-  //   })
-    
-  //   .catch(e => {
-  //     console.log(e.error)
-  //   })
   }
   // The textOnLeft boolean prop can be used to display either the text on left or right side of the image.
   if(additionalCharges && eventData){
@@ -162,7 +142,7 @@ export default ({
               <br />
               <TextContent> Price: {totalPrice}<br />Service Charge: {paymentConfig.response.service_fee}% <br />Payment Gateway Charge: {paymentConfig.response.payment_fee}% <br />Total Price: {totalPrice+((additionalCharges)*(totalPrice)/100)}</TextContent>
               {/* <Textarea name="message" placeholder="Your Message Here" /> */}
-              <SubmitButton type="submit" onClick={handleClick}>{submitButtonText} </SubmitButton>
+              <SubmitButton type="submit" onClick={checkout}>{submitButtonText} </SubmitButton>
              
             </Form>
           </TextContent>

@@ -2,18 +2,8 @@ import React, { useEffect } from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import axios from "axios";
-import { withRouter } from 'react-router-dom';
-import Header, { NavLink, LogoLink, PrimaryLink, NavToggle, DesktopNavLinks } from "../headers/light.js";
+import  { NavLink} from "../headers/light.js";
 const BaseURL = "http://127.0.0.1:8000";
-const StyledHeader = styled(Header)`
-  ${tw`pt-8 max-w-none w-full`}
-  ${DesktopNavLinks} ${NavLink}, ${LogoLink} {
-    ${tw`text-gray-100 hover:border-gray-300 hover:text-gray-300`}
-  }
-  ${NavToggle}.closed {
-    ${tw`text-gray-100 hover:text-primary-500`}
-  }
-`;
 
 const Container = styled.div`
   ${tw`relative -mx-8 -mt-8 bg-center bg-cover h-screen min-h-144`}
@@ -37,9 +27,6 @@ const PrimaryAction = tw.button`rounded-full px-8 py-3 mt-10 text-sm sm:text-bas
 // eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
 
-  // const params = useSearchParams();
-  // const queryParams = queryString.parse(params.search);
-  // console.log("46-----", queryParams);
   // eslint-disable-next-line no-undef
 
   const [event, setEventDetails] = React.useState(null);
