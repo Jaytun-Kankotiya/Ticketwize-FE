@@ -5,9 +5,8 @@ import styled from "styled-components";
 import { SectionHeading, Subheading as SubheadingBase } from "./../misc/Headings.js";
 import { PrimaryButton as PrimaryButtonBase } from "./../misc/Buttons.js";
 import EmailIllustrationSrc from "./../../images/email-illustration.svg";
-const BaseURL = "http://127.0.0.1:8000";
+import * as configData from "../../config/constants.js"
 const FormData = require('form-data');
-let data = new FormData();
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24`;
 const Column = tw.div`w-full max-w-md mx-auto md:max-w-none md:mx-0`;
@@ -46,7 +45,7 @@ export default ({
   heading = <>Please Fill Below Form and <span tw="text-primary-500">Confirm your Seats</span><wbr /> with us.</>,
   description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   submitButtonText = "Checkout",
-  formAction = BaseURL+'/api/v1/event/register',
+  formAction = configData.API_URL+'/api/v1/event/register',
   formMethod = "POST",
   textOnLeft = true,
 }) => {
@@ -55,7 +54,7 @@ export default ({
   const [totalPrice, setTotalPrice] = React.useState(0);
   const [noOfTickets, setnoOfTickets] = React.useState(1);
   useEffect(() => {
-    axios.get(BaseURL+'/api/v1/payment/fetch/payment_config')
+    axios.get(configData.API_URL+'/api/v1/payment/fetch/payment_config')
   .then(function (response) {
     setPaymentConfig(response.data);
   })
@@ -69,7 +68,7 @@ export default ({
 
   const [eventData, setEventDetails] = React.useState(null);
   useEffect(() => {
-    axios.get(BaseURL + '/api/v1/event/fetch?event_id=f34ccf99-8963-476b-90f5-8d81b6963a4d')
+    axios.get(configData.API_URL + '/api/v1/event/fetch?event_id=f34ccf99-8963-476b-90f5-8d81b6963a4d')
       .then(function (response) {
         setEventDetails(response.data);
       })
@@ -110,7 +109,7 @@ export default ({
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: BaseURL+'/api/v1/event/register',
+      url: configData.API_URL+'/api/v1/event/register',
       headers: {"Content-Type":"application/json"},
       data : data
     };

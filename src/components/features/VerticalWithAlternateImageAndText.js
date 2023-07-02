@@ -1,20 +1,17 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
-import { useSearchParams } from "react-router-dom";
-import queryString from 'query-string';
 import { ReactComponent as SvgDotPatternIcon } from "../../images/dot-pattern.svg";
 import { SectionHeading as HeadingTitle } from "../misc/Headings.js";
 import axios from "axios";
-const Container = tw.div`relative`;
-const BaseURL = "http://127.0.0.1:8000";
-const SingleColumn = tw.div`max-w-screen-xl mx-auto py-20 lg:py-24`;
+import * as configData from '../../config/constants.js';
 
+
+const Container = tw.div`relative`;
+const SingleColumn = tw.div`max-w-screen-xl mx-auto py-20 lg:py-24`;
 const HeadingInfoContainer = tw.div`flex flex-col items-center`;
 const HeadingDescription = tw.p`mt-4 font-medium text-gray-600 text-center max-w-sm`;
-
 const Content = tw.div`mt-16`;
-
 const Card = styled.div(props => [
   tw`mt-24 md:flex justify-center items-center`,
   props.reversed ? tw`flex-row-reverse` : "flex-row"
@@ -42,21 +39,21 @@ const SvgDotPattern4 = tw(
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default()=> {
-  const params = useSearchParams();
-  const queryParams = queryString.parse(params.search);
-  console.log("46-----", queryParams);
+  const urlParams = new URLSearchParams(window.location.search);
+  const event_id = urlParams.get('event_id');
   // eslint-disable-next-line no-undef
   
   const [event, setEventDetails] = React.useState(null);
   useEffect(() => {
-    axios.get(BaseURL+'/api/v1/event/fetch?event_id=f34ccf99-8963-476b-90f5-8d81b6963a4d')
+    axios.get(configData.API_URL+'/api/v1/event/fetch?event_id='+event_id)
   .then(function (response) {
     setEventDetails(response.data);
   })
   .catch(function (error) {
     console.log(error);
   });
-  }, [])
+  }, [event_id])
+  console.log("56-----", event)
   if(event){
   return (
     <Container>
@@ -70,7 +67,7 @@ export default()=> {
 
       <Content>
           <Card>
-            <Image imageSrc='https://www.adobe.com/content/dam/www/us/en/events/overview-page/eventshub_evergreen_opengraph_1200x630_2x.jpg' />
+            <Image imageSrc={event.response.event_content[0].content} />
             <Details>
               {/* <Subtitle>{card.subtitle}</Subtitle> */}
               {/* <Subtitle>Tiele</Subtitle> */}

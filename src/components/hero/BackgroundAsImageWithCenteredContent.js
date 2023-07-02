@@ -3,7 +3,7 @@ import tw from "twin.macro";
 import styled from "styled-components";
 import axios from "axios";
 import  { NavLink} from "../headers/light.js";
-const BaseURL = "http://127.0.0.1:8000";
+import * as configData from '../../config/constants.js';
 
 const Container = styled.div`
   ${tw`relative -mx-8 -mt-8 bg-center bg-cover h-screen min-h-144`}
@@ -26,12 +26,13 @@ const PrimaryAction = tw.button`rounded-full px-8 py-3 mt-10 text-sm sm:text-bas
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
-
+  const urlParams = new URLSearchParams(window.location.search);
+  const event_id = urlParams.get('event_id');
   // eslint-disable-next-line no-undef
 
   const [event, setEventDetails] = React.useState(null);
   useEffect(() => {
-    axios.get(BaseURL + '/api/v1/event/fetch?event_id=f34ccf99-8963-476b-90f5-8d81b6963a4d')
+    axios.get(configData.API_URL + '/api/v1/event/fetch?event_id='+event_id)
       .then(function (response) {
         setEventDetails(response.data);
       })
