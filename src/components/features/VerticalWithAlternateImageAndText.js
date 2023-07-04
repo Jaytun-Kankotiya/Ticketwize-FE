@@ -5,7 +5,7 @@ import { ReactComponent as SvgDotPatternIcon } from "../../images/dot-pattern.sv
 import { SectionHeading as HeadingTitle } from "../misc/Headings.js";
 import axios from "axios";
 import * as configData from '../../config/constants.js';
-
+import ReactHtmlParser from 'react-html-parser'; 
 
 const Container = tw.div`relative`;
 const SingleColumn = tw.div`max-w-screen-xl mx-auto py-20 lg:py-24`;
@@ -53,7 +53,6 @@ export default()=> {
     console.log(error);
   });
   }, [event_id])
-  console.log("56-----", event)
   if(event){
   return (
     <Container>
@@ -64,7 +63,6 @@ export default()=> {
           Here you can find the event details.
         </HeadingDescription>
       </HeadingInfoContainer>
-
       <Content>
           <Card>
             <Image imageSrc={event.response.event_content[0].content} />
@@ -74,7 +72,7 @@ export default()=> {
               <Title> {event.response.title}</Title>
               <h3><strong>Venue:</strong> {event.response.address.house_no} {event.response.address.street},  {event.response.address.city}, {event.response.address.provision},  {event.response.address.country}, {event.response.address.postal_code}</h3>
               <h3><strong>Date:</strong> {event.response.start_date_time}</h3>
-              <Description>{event.response.description}</Description>
+              <Description>  { ReactHtmlParser (event.response.description) }    </Description>
               <Description><p><strong>Price:</strong> {event.response.price} buks</p></Description>
               <Description><p><strong>Hurry up! only {event.response.total_seat-event.response.booked_seat} seats remaining from {event.response.total_seat} seats.</strong> </p></Description>
             </Details>

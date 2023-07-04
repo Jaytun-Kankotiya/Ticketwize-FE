@@ -39,11 +39,10 @@ export default () => {
       .catch(function (error) {
         console.log(error);
       });
-  }, [])
+  }, [event_id])
 
   if (event) {
     return (
-      // call the API
       <Container>
         <OpacityOverlay />
         <HeroContainer>
