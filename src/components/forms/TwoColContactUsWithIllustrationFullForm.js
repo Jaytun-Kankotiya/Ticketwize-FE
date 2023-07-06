@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import tw from "twin.macro";
-import axios from "axios";
+import axios from 'axios'
 import styled from "styled-components";
 import { SectionHeading, Subheading as SubheadingBase } from "./../misc/Headings.js";
 import { PrimaryButton as PrimaryButtonBase } from "./../misc/Buttons.js";
 import EmailIllustrationSrc from "./../../images/email-illustration.svg";
 import * as configData from "../../config/constants.js"
-const FormData = require('form-data');
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24`;
 const Column = tw.div`w-full max-w-md mx-auto md:max-w-none md:mx-0`;
@@ -45,7 +44,7 @@ export default ({
   heading = <>Please Fill Below Form and <span tw="text-primary-500">Confirm your Seats</span><wbr /> with us.</>,
   description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   submitButtonText = "Checkout",
-  formAction = configData.API_URL+'/api/v1/event/register',
+  formAction = configData.API_URL+'api/v1/event/register',
   formMethod = "POST",
   textOnLeft = true,
 }) => {
@@ -54,7 +53,7 @@ export default ({
   const [totalPrice, setTotalPrice] = React.useState(0);
   const [noOfTickets, setnoOfTickets] = React.useState(1);
   useEffect(() => {
-    axios.get(configData.API_URL+'/api/v1/payment/fetch/payment_config')
+    axios.get(configData.API_URL+'api/v1/payment/fetch/payment_config')
   .then(function (response) {
     setPaymentConfig(response.data);
   })
@@ -68,7 +67,7 @@ export default ({
 
   const [eventData, setEventDetails] = React.useState(null);
   useEffect(() => {
-    axios.get(configData.API_URL + '/api/v1/event/fetch?event_id=f34ccf99-8963-476b-90f5-8d81b6963a4d')
+    axios.get(configData.API_URL + 'api/v1/event/fetch?event_id=f34ccf99-8963-476b-90f5-8d81b6963a4d')
       .then(function (response) {
         setEventDetails(response.data);
       })
@@ -95,36 +94,45 @@ export default ({
     };
     
   }, []);
+  const [payment, setPaymentDetails] = React.useState(null);
+  const openInNewTab = (url) => {
+    debugger
+    
+    window.open(url, "_blank", "noreferrer");
+  };
 
-  const checkout = () => {
-    let data = new FormData();
-    data.append('event_id', 1);
-    data.append('no_of_tickets', '5');
-    data.append('first_name', 'Ravin');
-    data.append('last_name', 'Rakholiya');
-    data.append('email', 'ravinkumarrakh@gmail.com');
-    data.append('contact_number', '5199914007');
-    data.append('dob', '1998-06-22');
-    data.append('gender', 'M');
-    let config = {
-      method: 'post',
-      maxBodyLength: Infinity,
-      url: configData.API_URL+'/api/v1/event/register',
-      headers: {"Content-Type":"application/json"},
-      data : data
-    };
-    axios.request(config)
-    .then((response) => {
-      console.log(JSON.stringify(response.data));
-      if(response.ok) return response.json()
-      return response.json().then(json => Promise.reject(json))
+  debugger
+   const checkout = () => {
+    debugger
+    const query = new URLSearchParams(window.location.search);
+    let data =  {
+      event_id: query.get("event_id"),
+      no_of_tickets: query.get("event_id"),
+      first_name: query.get("event_id"),
+      last_name: query.get("event_id"),
+      email: query.get("event_id"),
+      contact_number: query.get("event_id"),
+      dob: query.get("event_id"),
+      gender: query.get("event_id")
+    }
+    console.log(data);
+    let stripe_url;
+     axios.post(configData.API_URL+'api/v1/event/register', data)
+    .then(function (response) {
+      console.log(response);
+      stripe_url = response.data.response
+      setPaymentDetails(response.data.response);
+
+      openInNewTab(response.data.response)
+      
     })
-    .then(({url}) =>{
-      window.location = url
-    })
-    .catch((error) => {
+    .catch(function (error) {
       console.log(error);
     });
+   if(stripe_url === null){
+    checkout()
+   }
+
   }
   const Message = ({ message}) => {
     <section>
@@ -132,9 +140,11 @@ export default ({
     </section>
   }
   // The textOnLeft boolean prop can be used to display either the text on left or right side of the image.
-  if(additionalCharges && eventData){
     
-
+    if(payment){
+      openInNewTab(payment)
+   }
+   else if(additionalCharges && eventData){
 
   return message ? <Message>message = {message}</Message>: (
     <Container>
@@ -147,7 +157,7 @@ export default ({
             {subheading && <Subheading>{subheading}</Subheading>}
             <Heading>{heading}</Heading>
             {description && <Description>{description}</Description>}
-            <Form action={formAction} method={formMethod}>
+            <Form onSubmit={checkout}>
               <Input type="email" name="email" placeholder="Your Email Address" required />
               <Input type="text" name="first_name" placeholder="First Name" required />
               <Input type="text" name="last_name" placeholder="Last Name" required />
@@ -165,7 +175,7 @@ export default ({
               <br />
               <TextContent> Price: {eventData.response.price}$ x {noOfTickets}<br />Service Charge: {paymentConfig.response.service_fee}% x {noOfTickets} <br />Payment Gateway Charge: {paymentConfig.response.payment_fee}% x {noOfTickets} <br />Total Price: {totalPrice+((additionalCharges)*(totalPrice)/100)}$</TextContent>
               {/* <Textarea name="message" placeholder="Your Message Here" /> */}
-              <SubmitButton type="submit" >{submitButtonText} </SubmitButton>
+              <SubmitButton type="submit" onClick={checkout}>{submitButtonText} </SubmitButton>
              
             </Form>
           </TextContent>
@@ -173,4 +183,8 @@ export default ({
       </TwoColumn>
     </Container>
   );}
+  else{
+    console.log("181------", payment)
+    return payment;
+  }
 };

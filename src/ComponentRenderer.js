@@ -429,21 +429,14 @@ export default () => {
   try {
     let Component = null;
     if (type === "blocks" && subtype) {
-      console.log("432-------", type)
-      console.log("433-------", subtype)
-      console.log("434-------", components)
       Component = components[type][subtype]["elements"][name].component
       return <AnimationRevealPage disabled>
         <Component />
       </AnimationRevealPage>
     }
     else {
-      console.log("432-------", type)
-      console.log("433-------", name)
-      console.log("434-------", components)
       Component = components[type][name].component
     }
-    console.log("446------")
     if (Component)
       return <Component />
 

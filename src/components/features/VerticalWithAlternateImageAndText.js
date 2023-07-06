@@ -45,7 +45,7 @@ export default()=> {
   
   const [event, setEventDetails] = React.useState(null);
   useEffect(() => {
-    axios.get(configData.API_URL+'/api/v1/event/fetch?event_id='+event_id)
+    axios.get(configData.API_URL+'api/v1/event/fetch?event_id='+event_id)
   .then(function (response) {
     setEventDetails(response.data);
   })
