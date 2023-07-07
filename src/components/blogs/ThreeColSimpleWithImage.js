@@ -56,7 +56,7 @@ export default () => {
   ];
   return (
     <Container>
-      <Content>
+      {/* <Content>
         <HeadingInfoContainer>
           <HeadingTitle>Popular Blog Posts</HeadingTitle>
           <HeadingDescription>Some amazing blog posts that are written by even more amazing people.</HeadingDescription>
@@ -75,7 +75,7 @@ export default () => {
         </ThreeColumn>
       </Content>
       <DecoratorBlob1 />
-      <DecoratorBlob2 />
+      <DecoratorBlob2 /> */}
     </Container>
   );
 };

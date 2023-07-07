@@ -1,21 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
-import { css } from "styled-components/macro"; //eslint-disable-line
+import axios from "axios";
+import  { NavLink} from "../headers/light.js";
+import * as configData from '../../config/constants.js';
 
-import Header, { NavLink, NavLinks, PrimaryLink as PrimaryLinkBase, LogoLink, NavToggle, DesktopNavLinks } from "../headers/light.js";
-
-const StyledHeader = styled(Header)`
-  ${tw`pt-8 max-w-none w-full`}
-  ${DesktopNavLinks} ${NavLink}, ${LogoLink} {
-    ${tw`text-gray-100 hover:border-gray-300 hover:text-gray-300`}
-  }
-  ${NavToggle}.closed {
-    ${tw`text-gray-100 hover:text-primary-500`}
-  }
-`;
-
-const PrimaryLink = tw(PrimaryLinkBase)`rounded-full`
 const Container = styled.div`
   ${tw`relative -mx-8 -mt-8 bg-center bg-cover h-screen min-h-144`}
   background-image: url("https://images.unsplash.com/photo-1536300007881-7e482242baa5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1920&q=80");
@@ -35,43 +24,40 @@ const Heading = styled.h1`
 
 const PrimaryAction = tw.button`rounded-full px-8 py-3 mt-10 text-sm sm:text-base sm:mt-16 sm:px-8 sm:py-4 bg-gray-100 font-bold shadow transition duration-300 bg-primary-500 text-gray-100 hocus:bg-primary-700 hocus:text-gray-200 focus:outline-none focus:shadow-outline`;
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
-  const navLinks = [
-    <NavLinks key={1}>
-      <NavLink href="#">
-        About
-      </NavLink>
-      <NavLink href="#">
-        Blog
-      </NavLink>
-      <NavLink href="#">
-        Locations
-      </NavLink>
-      <NavLink href="#">
-        Pricing
-      </NavLink>
-    </NavLinks>,
-    <NavLinks key={2}>
-      <PrimaryLink href="/#">
-        Hire Us
-      </PrimaryLink>
-    </NavLinks>
-  ];
+  const urlParams = new URLSearchParams(window.location.search);
+  const event_id = urlParams.get('event_id');
+  // eslint-disable-next-line no-undef
+  
+  const [event, setEventDetails] = React.useState(null);
+  useEffect(() => {
+    axios.get(configData.API_URL + 'api/v1/event/fetch?event_id='+event_id)
+      .then(function (response) {
+        setEventDetails(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, [event_id])
 
-  return (
-    <Container>
-      <OpacityOverlay />
-      <HeroContainer>
-        <StyledHeader links={navLinks} />
-        <Content>
-          <Heading>
-              Book Music & Comedy Events
-              <br />
-              anywhere in New York
-          </Heading>
-          <PrimaryAction>Search Events Near Me</PrimaryAction>
-        </Content>
-      </HeroContainer>
-    </Container>
-  );
+  if (event) {
+    return (
+      <Container>
+        <OpacityOverlay />
+        <HeroContainer>
+
+          <Content>
+            <Heading>
+              {event.response.title}
+            </Heading>
+            {/* /components/blocks/Form/TwoColContactUsFull */}
+            <NavLink  href="/components/blocks/Form/TwoColContactUsFull">
+            <PrimaryAction>Reserve Seat</PrimaryAction>
+            </NavLink>
+          </Content>
+        </HeroContainer>
+      </Container>
+    );
+  }
 };

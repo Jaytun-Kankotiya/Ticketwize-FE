@@ -34,11 +34,12 @@ const SubmitButton = tw.button`w-full sm:w-32 mt-6 py-3 bg-gray-100 text-primary
 
 const SvgDotPattern1 = tw(SvgDotPatternIcon)`absolute bottom-0 right-0 transform translate-y-1/2 translate-x-1/2 -z-10 opacity-50 text-primary-500 fill-current w-24`
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
   return (
     <Container>
       <Content>
-        <FormContainer>
+        {/* <FormContainer>
           <div tw="mx-auto max-w-4xl">
             <h2>Organize an Event</h2>
             <form action="#">
@@ -65,7 +66,7 @@ export default () => {
             </form>
           </div>
           <SvgDotPattern1 />
-        </FormContainer>
+        </FormContainer> */}
       </Content>
     </Container>
   );

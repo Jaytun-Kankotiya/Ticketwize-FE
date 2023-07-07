@@ -6,25 +6,6 @@ import EventLandingPage from "./demos/EventLandingPage.js";
 
 import EventLandingPageImageSrc from "./images/demo/EventLandingPage.jpeg";
 
-
-import LoginPage from "./pages/Login.js";
-import SignupPage from "./pages/Signup.js";
-import PricingPage from "./pages/Pricing.js";
-import AboutUsPage from "./pages/AboutUs.js";
-import ContactUsPage from "./pages/ContactUs.js";
-import BlogIndexPage from "./pages/BlogIndex.js";
-import TermsOfServicePage from "./pages/TermsOfService.js";
-import PrivacyPolicyPage from "./pages/PrivacyPolicy.js";
-
-import LoginPageImageSrc from "./images/demo/LoginPage.jpeg";
-import SignupPageImageSrc from "./images/demo/SignupPage.jpeg";
-import PricingPageImageSrc from "./images/demo/PricingPage.jpeg";
-import AboutUsPageImageSrc from "./images/demo/AboutUsPage.jpeg";
-import ContactUsPageImageSrc from "./images/demo/ContactUsPage.jpeg";
-import BlogIndexPageImageSrc from "./images/demo/BlogIndexPage.jpeg";
-import TermsOfServicePageImageSrc from "./images/demo/TermsOfServicePage.jpeg";
-import PrivacyPolicyPageImageSrc from "./images/demo/PrivacyPolicyPage.jpeg";
-
 import BackgroundAsImageHero from "./components/hero/BackgroundAsImage.js";
 import IllustrationAndVideoHero from "./components/hero/TwoColumnWithVideo.js";
 import IllustrationAndInputHero from "./components/hero/TwoColumnWithInput.js";
@@ -87,7 +68,8 @@ import FiveColumnWithBackgroundFooter from "./components/footers/FiveColumnWithB
 import FiveColumnDarkFooter from "./components/footers/FiveColumnDark.js";
 import MiniCenteredFooter from "./components/footers/MiniCenteredFooter.js";
 
-
+import PaymentSuccess from "./components/payment/PaymentSuccess.js"
+import PaymentCancle from "./components/payment/PaymentCancle.js"
 export const components = {
   landingPages: {
     EventLandingPage: {
@@ -95,52 +77,14 @@ export const components = {
       imageSrc: EventLandingPageImageSrc,
       url: "/components/landingPages/EventLandingPage",
     },
-  
+
   },
 
   innerPages: {
-    LoginPage: {
-      component: LoginPage,
-      imageSrc: LoginPageImageSrc,
-      scrollAnimationDisabled: true,
-      url: "/components/innerPages/LoginPage",
-    },
-    SignupPage: {
-      component: SignupPage,
-      url: `/components/innerPages/SignupPage`,
-      imageSrc: SignupPageImageSrc,
-      scrollAnimationDisabled: true,
-    },
-    PricingPage: {
-      component: PricingPage,
-      url: `/components/innerPages/PricingPage`,
-      imageSrc: PricingPageImageSrc,
-    },
-    AboutUsPage: {
-      component: AboutUsPage,
-      url: `/components/innerPages/AboutUsPage`,
-      imageSrc: AboutUsPageImageSrc,
-    },
-    ContactUsPage: {
-      component: ContactUsPage,
-      url: `/components/innerPages/ContactUsPage`,
-      imageSrc: ContactUsPageImageSrc,
-    },
-    BlogIndexPage: {
-      component: BlogIndexPage,
-      url: `/components/innerPages/BlogIndexPage`,
-      imageSrc: BlogIndexPageImageSrc,
-    },
-    TermsOfServicePage: {
-      component: TermsOfServicePage,
-      url: `/components/innerPages/TermsOfServicePage`,
-      imageSrc: TermsOfServicePageImageSrc,
-    },
-    PrivacyPolicyPage: {
-      component: PrivacyPolicyPage,
-      url: `/components/innerPages/PrivacyPolicyPage`,
-      imageSrc: PrivacyPolicyPageImageSrc,
-    }
+
+
+
+
   },
 
   blocks: {
@@ -212,7 +156,7 @@ export const components = {
           component: ThreeColWithSideImageFeatures,
           url: "/components/blocks/Features/ThreeColWithSideImage",
         },
-         TwoColWithButton: {
+        TwoColWithButton: {
           name: "Two Column With Image and Action Button",
           component: TwoColWithButtonFeatures,
           url: "/components/blocks/Features/TwoColWithButton",
@@ -329,7 +273,7 @@ export const components = {
           component: ThreeColSimpleWithImageAndDashedBorderBlog,
           url: "/components/blocks/Blog/ThreeColSimpleWithImageAndDashedBorder",
         },
-      } 
+      }
     },
 
     Testimonial: {
@@ -383,7 +327,21 @@ export const components = {
         },
       }
     },
-
+    Payment: {
+      type: "Payment Status",
+      elements: {
+        PaymentSuccess: {
+          name: "Payment Successful",
+          component: PaymentSuccess,
+          url: "/components/blocks/Payment/PaymentSuccess"
+        },
+        PaymentCancle: {
+          name: "Payment Cancle",
+          component: PaymentCancle,
+          url: "/components/blocks/Payment/PaymentCancle"
+        }
+      }
+    },
     Form: {
       type: "Forms Section",
       elements: {
@@ -470,17 +428,17 @@ export default () => {
 
   try {
     let Component = null;
-    if(type === "blocks" && subtype) {
-      Component= components[type][subtype]["elements"][name].component
+    if (type === "blocks" && subtype) {
+      Component = components[type][subtype]["elements"][name].component
       return <AnimationRevealPage disabled>
-          <Component/>
-        </AnimationRevealPage>
+        <Component />
+      </AnimationRevealPage>
     }
-    else
-      Component= components[type][name].component
-
-    if(Component)
-      return <Component/>
+    else {
+      Component = components[type][name].component
+    }
+    if (Component)
+      return <Component />
 
     throw new Error("Component Not Found")
   }

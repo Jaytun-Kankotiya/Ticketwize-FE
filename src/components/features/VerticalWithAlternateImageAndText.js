@@ -1,18 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
 import { ReactComponent as SvgDotPatternIcon } from "../../images/dot-pattern.svg";
 import { SectionHeading as HeadingTitle } from "../misc/Headings.js";
+import axios from "axios";
+import * as configData from '../../config/constants.js';
+import ReactHtmlParser from 'react-html-parser'; 
 
 const Container = tw.div`relative`;
-
 const SingleColumn = tw.div`max-w-screen-xl mx-auto py-20 lg:py-24`;
-
 const HeadingInfoContainer = tw.div`flex flex-col items-center`;
 const HeadingDescription = tw.p`mt-4 font-medium text-gray-600 text-center max-w-sm`;
-
 const Content = tw.div`mt-16`;
-
 const Card = styled.div(props => [
   tw`mt-24 md:flex justify-center items-center`,
   props.reversed ? tw`flex-row-reverse` : "flex-row"
@@ -22,10 +21,8 @@ const Image = styled.div(props => [
   tw`rounded md:w-1/2 lg:w-5/12 xl:w-1/3 flex-shrink-0 h-80 md:h-144 bg-cover bg-center mx-4 sm:mx-8 md:mx-4 lg:mx-8`
 ]);
 const Details = tw.div`mt-4 md:mt-0 md:max-w-md mx-4 sm:mx-8 md:mx-4 lg:mx-8`;
-const Subtitle = tw.div`font-bold tracking-wide text-secondary-100`;
 const Title = tw.h4`text-3xl font-bold text-gray-900`;
 const Description = tw.p`mt-2 text-sm leading-loose`;
-const Link = tw.a`inline-block mt-4 text-sm text-primary-500 font-bold cursor-pointer transition duration-300 border-b-2 border-transparent hover:border-primary-500`;
 
 const SvgDotPattern1 = tw(
   SvgDotPatternIcon
@@ -40,67 +37,55 @@ const SvgDotPattern4 = tw(
   SvgDotPatternIcon
 )`absolute bottom-0 right-0 transform translate-x-20 rotate-90 -translate-y-24 -z-10 opacity-25 text-primary-500 fill-current w-24`;
 
-export default () => {
-  const cards = [
-    {
-      imageSrc:
-        "https://images.unsplash.com/photo-1550699026-4114bbf4fb49?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=632&q=80",
-      subtitle: "Paid",
-      title: "Loachella, NYC",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-      url: "https://timerse.com"
-    },
-
-    {
-      imageSrc:
-        "https://images.unsplash.com/photo-1543423924-b9f161af87e4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80",
-      subtitle: "Free",
-      title: "Rock In Rio, Upstate",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-      url: "https://timerse.com"
-    },
-
-    {
-      imageSrc:
-        "https://images.unsplash.com/photo-1509824227185-9c5a01ceba0d?ixlib=rb-1.2.1&auto=format&fit=crop&w=658&q=80",
-      subtitle: "Exclusive",
-      title: "Lollapalooza, Manhattan",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-      url: "https://timerse.com"
-    }
-  ];
-
+// eslint-disable-next-line import/no-anonymous-default-export
+export default()=> {
+  const urlParams = new URLSearchParams(window.location.search);
+  const event_id = urlParams.get('event_id');
+  // eslint-disable-next-line no-undef
+  useEffect(() => {
+    localStorage.setItem('event_id', JSON.stringify(event_id));
+  }, [event_id]);
+  const [event, setEventDetails] = React.useState(null);
+  useEffect(() => {
+    axios.get(configData.API_URL+'api/v1/event/fetch?event_id='+event_id)
+  .then(function (response) {
+    setEventDetails(response.data);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+  }, [event_id])
+  if(event){
   return (
     <Container>
-      <SingleColumn>
-        <HeadingInfoContainer>
-          <HeadingTitle>Popular Events</HeadingTitle>
-          <HeadingDescription>
-            Here are some of the most popular events in New York City curated by professionals.
-          </HeadingDescription>
-        </HeadingInfoContainer>
-
-        <Content>
-          {cards.map((card, i) => (
-            <Card key={i} reversed={i % 2 === 1}>
-              <Image imageSrc={card.imageSrc} />
-              <Details>
-                <Subtitle>{card.subtitle}</Subtitle>
-                <Title>{card.title}</Title>
-                <Description>{card.description}</Description>
-                <Link href={card.url}>See Event Details</Link>
-              </Details>
-            </Card>
-          ))}
-        </Content>
-      </SingleColumn>
-      <SvgDotPattern1 />
-      <SvgDotPattern2 />
-      <SvgDotPattern3 />
-      <SvgDotPattern4 />
-    </Container>
-  );
-};
+    <SingleColumn>
+      <HeadingInfoContainer>
+        <HeadingTitle>About Event</HeadingTitle>
+        <HeadingDescription>
+          Here you can find the event details.
+        </HeadingDescription>
+      </HeadingInfoContainer>
+      <Content>
+          <Card>
+            <Image imageSrc={event.response.event_content[0].content} />
+            <Details>
+              {/* <Subtitle>{card.subtitle}</Subtitle> */}
+              {/* <Subtitle>Tiele</Subtitle> */}
+              <Title> {event.response.title}</Title>
+              <h3><strong>Venue:</strong> {event.response.address.house_no} {event.response.address.street},  {event.response.address.city}, {event.response.address.provision},  {event.response.address.country}, {event.response.address.postal_code}</h3>
+              <h3><strong>Date:</strong> {event.response.start_date_time}</h3>
+              <Description>  { ReactHtmlParser (event.response.description) }    </Description>
+              <Description><p><strong>Price:</strong> {event.response.price} buks</p></Description>
+              <Description><p><strong>Hurry up! only {event.response.total_seat-event.response.booked_seat} seats remaining from {event.response.total_seat} seats.</strong> </p></Description>
+            </Details>
+          </Card>
+        
+      </Content>
+    </SingleColumn>
+    <SvgDotPattern1 />
+    <SvgDotPattern2 />
+    <SvgDotPattern3 />
+    <SvgDotPattern4 />
+  </Container>
+      );}
+}

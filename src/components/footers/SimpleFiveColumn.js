@@ -3,7 +3,7 @@ import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 
-import LogoImage from "../../images/logo.svg";
+import LogoImage from "../../images/logoblack.svg";
 import { ReactComponent as FacebookIcon } from "../../images/facebook-icon.svg";
 import { ReactComponent as TwitterIcon } from "../../images/twitter-icon.svg";
 import { ReactComponent as YoutubeIcon } from "../../images/youtube-icon.svg";
@@ -13,12 +13,6 @@ const FiveColumns = tw.div`max-w-screen-xl mx-auto py-16 lg:py-20 flex flex-wrap
 
 const Column = tw.div`md:w-1/5`;
 const WideColumn = tw(Column)`text-center md:text-left w-full md:w-2/5 mb-10 md:mb-0`;
-
-const ColumnHeading = tw.h5`font-bold`;
-
-const LinkList = tw.ul`mt-4 text-sm font-medium`;
-const LinkListItem = tw.li`mt-3`;
-const Link = tw.a`border-b-2 border-transparent hocus:text-primary-500 hocus:border-primary-500 pb-1 transition duration-300`;
 
 const LogoContainer = tw.div`flex items-center justify-center md:justify-start`;
 const LogoImg = tw.img`w-8`;
@@ -34,6 +28,7 @@ const SocialLink = styled.a`
   }
 `;
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
   return (
     <Container>
@@ -41,10 +36,10 @@ export default () => {
         <WideColumn>
           <LogoContainer>
             <LogoImg src={LogoImage} />
-            <LogoText>Treact Inc.</LogoText>
+            <LogoText>Eventos</LogoText>
           </LogoContainer>
           <CompanyDescription>
-            Treact is an Internet Technology company providing design resources such as website templates and themes.
+            Eventos is an Internet Technology company providing design resources such as website templates and themes.
           </CompanyDescription>
           <SocialLinksContainer>
             <SocialLink href="https://facebook.com">
@@ -58,7 +53,7 @@ export default () => {
             </SocialLink>
           </SocialLinksContainer>
         </WideColumn>
-        <Column>
+        {/* <Column>
           <ColumnHeading>Quick Links</ColumnHeading>
           <LinkList>
             <LinkListItem>
@@ -108,7 +103,7 @@ export default () => {
               <Link href="#">Disclaimer</Link>
             </LinkListItem>
           </LinkList>
-        </Column>
+        </Column> */}
       </FiveColumns>
     </Container>
   );

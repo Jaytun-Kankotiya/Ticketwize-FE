@@ -41,6 +41,7 @@ const Actions = styled.div`
   }
 `;
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default ({
   navLinks = [
     <NavLinks key={1}>
