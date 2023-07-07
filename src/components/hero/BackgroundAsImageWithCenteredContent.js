@@ -29,7 +29,7 @@ export default () => {
   const urlParams = new URLSearchParams(window.location.search);
   const event_id = urlParams.get('event_id');
   // eslint-disable-next-line no-undef
-
+  
   const [event, setEventDetails] = React.useState(null);
   useEffect(() => {
     axios.get(configData.API_URL + 'api/v1/event/fetch?event_id='+event_id)

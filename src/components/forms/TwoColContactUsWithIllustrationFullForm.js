@@ -48,6 +48,14 @@ export default ({
   formMethod = "POST",
   textOnLeft = true,
 }) => {
+  const [event_id, setEventId] = useState([]);
+
+useEffect(() => {
+  const eventId = JSON.parse(localStorage.getItem('event_id'));
+  if (eventId) {
+    setEventId(eventId);
+  }
+}, []);
   let value = 0;
   const [paymentConfig, setPaymentConfig] = React.useState(null);
   const [totalPrice, setTotalPrice] = React.useState(0);
@@ -64,17 +72,18 @@ export default ({
   if(paymentConfig){
     var additionalCharges = paymentConfig.response.total_additional_charges
   }
-
   const [eventData, setEventDetails] = React.useState(null);
+
+
   useEffect(() => {
-    axios.get(configData.API_URL + 'api/v1/event/fetch?event_id=f34ccf99-8963-476b-90f5-8d81b6963a4d')
+    axios.get(configData.API_URL + 'api/v1/event/fetch?event_id='+event_id)
       .then(function (response) {
         setEventDetails(response.data);
       })
       .catch(function (error) {
         console.log(error);
       });
-  }, [])
+  }, [event_id])
   const handleChange = (event) => {
     value = event.target.value;
     setnoOfTickets(value)
