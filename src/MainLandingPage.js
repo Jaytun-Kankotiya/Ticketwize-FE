@@ -167,7 +167,7 @@ export default ({
               <Heading as="h1">{heading}</Heading>
               <Description>{description}</Description>
               <NavLink href="/components/landingPages/EventLandingPage?event_id=c446aab3-fb96-4249-a7b7-af89c300c31c">
-                <PrimaryAction>See Your Event</PrimaryAction>
+                <PrimaryAction>Current Event</PrimaryAction>
               </NavLink>
               {/* <FeatureList>
                 {features.map((feature, index) => (
