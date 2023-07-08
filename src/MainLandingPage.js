@@ -8,8 +8,7 @@ import { Container, Content2Xl, ContentWithVerticalPadding } from "./components/
 import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro";
-import { LogoLink } from "./components/headers/light.js";
-import { SectionHeading as HeadingBase } from "./components/misc/Headings";
+import { LogoLink, NavLink as LightNavLink } from "./components/headers/light.js";
 import { SectionDescription as DescriptionBase } from "./components/misc/Typography";
 import { PrimaryButton as PrimaryButtonBase } from "./components/misc/Buttons.js";
 
@@ -18,14 +17,16 @@ import { ReactComponent as RadioIcon } from "feather-icons/dist/icons/radio.svg"
 import { ReactComponent as HandleIcon } from "./images/handle-icon.svg";
 import { ReactComponent as ArrowRightIcon } from "./images/arrow-right-3-icon.svg";
 
+import Footer from "./components/footers/SimpleFiveColumn.js";
+
 import heroScreenshotImageSrc from "./images/demo/MainLandingPageHero.png";
-import logo from "./images/logoblack1.svg";
+import logo from "./images/logo-hz.png";
 import useInView from "./helpers/useInView";
 
 /* Hero */
 const Row = tw.div`flex`;
 const NavRow = tw(Row)`flex flex-col lg:flex-row items-center justify-between`;
-const NavLink = tw.a`mt-4 lg:mt-0 transition duration-300 font-medium pb-1 border-b-2 mr-12 text-gray-700 border-gray-400 hocus:border-gray-700`;
+const NavLink = tw.a`mt-4 lg:mt-0 transition duration-300 font-medium pb-1 mr-12 text-gray-700 border-gray-400 hocus:border-gray-700`;
 const PrimaryNavLink = tw(
   NavLink
 )`text-gray-100 bg-primary-500 px-6 py-3 border-none rounded hocus:bg-primary-900 focus:shadow-outline mt-6 md:mt-4 lg:mt-0`;
@@ -36,8 +37,10 @@ const Column = tw.div`flex-1`;
 const UpdateNotice = tw(Column)`w-full flex-auto mb-4 sm:mb-8 rounded px-4 py-3 sm:px-5 sm:py-4 bg-orange-100 text-orange-800 flex items-center sm:items-start md:items-center justify-center lg:justify-start border border-orange-200 text-xs sm:text-sm text-center sm:text-left md:leading-none`;
 const UpdateNoticeIcon = tw(RadioIcon)`w-0 sm:w-5 sm:mr-3`;
 
+const HeadingBase = tw.h3`text-3xl sm:text-4xl font-black tracking-wide text-left`
+const Heading = tw(HeadingBase)`text-center lg:text-left text-primary-500 leading-snug`;
+
 const TextColumn = tw(Column)`mx-auto lg:mr-0 max-w-2xl lg:max-w-xl xl:max-w-2xl flex-shrink-0`;
-const Heading = tw(HeadingBase)`text-center lg:text-left text-primary-900 leading-snug`;
 const Description = tw(
   DescriptionBase
 )`mt-4 text-center lg:text-left lg:text-base text-gray-700 max-w-lg mx-auto lg:mx-0`;
@@ -85,11 +88,15 @@ const ResizableBox = styled(Rnd)`
     ${tw`w-4! right-0!`}
   }
 `;
+const PrimaryAction = tw.button`text-center lg:text-center rounded-full px-8 py-3 mt-10 text-sm sm:text-base sm:mt-16 sm:px-8 sm:py-4 bg-gray-100 font-bold shadow transition duration-300 bg-primary-500 text-gray-100 hocus:bg-primary-700 hocus:text-gray-200 focus:outline-none focus:shadow-outline`;
+
 const ResizeHandleButton = tw.button`cursor-col-resize focus:outline-none w-4 border-l bg-gray-100 absolute right-0 inset-y-0`;
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default ({
-  features = null,
+  features = [
+    "Book Your Events"
+  ],
   primaryButtonUrl = "#landingPageDemos",
   primaryButtonText = "Explore Demos",
   secondaryButtonUrl = "#componentDemos",
@@ -98,17 +105,17 @@ export default ({
   landingPages = components.landingPages,
   innerPages = components.innerPages,
   blocks = components.blocks,
-  heading = "Book Your Events with TicketWize.",
-  description = "Easily customizable modern React UI Templates and Components built using TailwindCSS which are also lightweight and simple to setup. All components are modular and fully responsive for great mobile experience as well as big desktop screens.  Brand Colors are also fully customizable. Free for personal as well as commercial use."
+  heading = <>Book Your Favorite Events with <span style={{ color: 'rgb(100,21,255)' }}>TicketWize</span>.</>,
+  description = "Welcome to TicketWize, your ultimate destination for concert and event ticket booking. We are passionate about connecting you with unforgettable live experiences and making the ticket buying process convenient, secure, and enjoyable."
 }) => {
   /*
    * Using gtag like this because we only want to use Google Analytics when Main Landing Page is rendered
    * Remove this part and the the gtag script inside public/index.html if you dont need google analytics
    */
-//   useEffect(() => {
-//     window.gtag("js", new Date());
-//     window.gtag("config", "UA-45799926-9");
-//   }, [])
+  //   useEffect(() => {
+  //     window.gtag("js", new Date());
+  //     window.gtag("config", "UA-45799926-9");
+  //   }, [])
 
   const previewImageAnimationVariants = {
     rest: {
@@ -124,23 +131,13 @@ export default ({
   const noOfInnerPages = Object.keys(innerPages).length;
   const noOfComponentBlocks = Object.values(blocks).reduce((acc, block) => acc + Object.keys(block.elements).length, 0);
 
-  features = features || [
-    `${noOfLandingPages} Landing Page Demos`,
-    `${noOfInnerPages} Inner Pages`,
-    `${noOfComponentBlocks} Components`,
-    "Uses TailwindCSS",
-    "Fully Responsive",
-    "Fully Customizable"
-  ];
-
   return (
     <AnimationRevealPage disabled>
       <Container tw="bg-gray-100 -mx-8 -mt-8 pt-8 px-8">
         <Content2Xl>
           <NavRow>
             <LogoLink href="/">
-              <img src={logo} alt="" />
-              TicketWize
+              <img style={{ height: 60, width: 309 }} src={logo} alt="" />
             </LogoLink>
             {/* <div tw="flex flex-wrap justify-center lg:justify-end items-center -mr-12">
               <NavLink target="_blank" href="https://owaiskhan.me/post/free-tailwindcss-react-ui-kit">
@@ -169,14 +166,17 @@ export default ({
             <TextColumn>
               <Heading as="h1">{heading}</Heading>
               <Description>{description}</Description>
-              <FeatureList>
+              <NavLink href="/components/landingPages/EventLandingPage?event_id=c446aab3-fb96-4249-a7b7-af89c300c31c">
+                <PrimaryAction>See Your Event</PrimaryAction>
+              </NavLink>
+              {/* <FeatureList>
                 {features.map((feature, index) => (
                   <Feature key={index}>
                     <FeatureIcon />
                     <FeatureText>{feature}</FeatureText>
                   </Feature>
                 ))}
-              </FeatureList>
+              </FeatureList> */}
               {/* <Actions>
                 <PrimaryButton href={primaryButtonUrl} css={buttonRoundedCss}>
                   {primaryButtonText}
@@ -250,6 +250,7 @@ export default ({
             <BlocksRenderer blocks={Object.values(blocks)} />
           </SectionContainer> */}
         </Content2Xl>
+        <Footer />
       </Container>
     </AnimationRevealPage>
   );

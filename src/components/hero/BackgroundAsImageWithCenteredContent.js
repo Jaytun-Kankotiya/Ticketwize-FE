@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import axios from "axios";
-import  { NavLink} from "../headers/light.js";
+import { NavLink } from "../headers/light.js";
 import * as configData from '../../config/constants.js';
 
 const Container = styled.div`
@@ -22,38 +22,36 @@ const Heading = styled.h1`
   }
 `;
 
+const SubHeading = styled.h4`
+  ${tw`text-xl text-center sm:text-xl lg:text-3xl xl:text-3xl font-black text-gray-100 leading-snug mt-6`}
+  span {
+    ${tw`inline-block mt-2`}
+  }
+`;
+
 const PrimaryAction = tw.button`rounded-full px-8 py-3 mt-10 text-sm sm:text-base sm:mt-16 sm:px-8 sm:py-4 bg-gray-100 font-bold shadow transition duration-300 bg-primary-500 text-gray-100 hocus:bg-primary-700 hocus:text-gray-200 focus:outline-none focus:shadow-outline`;
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const event_id = urlParams.get('event_id');
-  // eslint-disable-next-line no-undef
-  
-  const [event, setEventDetails] = React.useState(null);
-  useEffect(() => {
-    axios.get(configData.API_URL + 'api/v1/event/fetch?event_id='+event_id)
-      .then(function (response) {
-        setEventDetails(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }, [event_id])
+export default (props) => {
+
+  console.log("props", props);
+  const event = props.event;
 
   if (event) {
     return (
       <Container>
         <OpacityOverlay />
         <HeroContainer>
-
           <Content>
             <Heading>
               {event.response.title}
             </Heading>
-            {/* /components/blocks/Form/TwoColContactUsFull */}
-            <NavLink  href="/components/blocks/Form/TwoColContactUsFull">
-            <PrimaryAction>Reserve Seat</PrimaryAction>
+            {event.response.sponser_by &&
+              <SubHeading>
+                {'Sponsors by ' + event.response.sponser_by}
+              </SubHeading>}
+            <NavLink href="/components/blocks/Form/TwoColContactUsFull">
+              <PrimaryAction>Book Ticket</PrimaryAction>
             </NavLink>
           </Content>
         </HeroContainer>

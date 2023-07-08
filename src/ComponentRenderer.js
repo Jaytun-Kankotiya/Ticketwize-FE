@@ -49,6 +49,8 @@ import TwoColumnWithImageAndRatingTestimonial from "./components/testimonials/Tw
 import ThreeColumnWithProfileImageTestimonial from "./components/testimonials/ThreeColumnWithProfileImage.js";
 import SimplePrimaryBackgroundTestimonial from "./components/testimonials/SimplePrimaryBackground.js";
 
+import SimpleAboutUs from "./components/about/SimpleAboutUs";
+
 import SimpleWithSideImageFAQS from "./components/faqs/SimpleWithSideImage.js";
 import SingleColFAQS from "./components/faqs/SingleCol.js";
 import TwoColumnPrimaryBackgroundFAQS from "./components/faqs/TwoColumnPrimaryBackground.js";
@@ -325,6 +327,16 @@ export const components = {
           component: TwoColumnPrimaryBackgroundFAQS,
           url: "/components/blocks/FAQS/TwoColumnPrimaryBackground",
         },
+      }
+    },
+    About: {
+      type: "About Us Section",
+      elements: {
+        SimpleAboutUs: {
+          name: "Simple About Us Page",
+          component: SimpleAboutUs,
+          url: "/components/blocks/About/SimpleAboutUs",
+        }
       }
     },
     Payment: {
