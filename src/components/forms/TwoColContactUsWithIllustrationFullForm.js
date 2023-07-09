@@ -65,14 +65,15 @@ export default ({
     axios.get(configData.API_URL + 'api/v1/payment/fetch/payment_config')
       .then(function (response) {
         setPaymentConfig(response.data);
-        let serviceFee = Number((Number(eventDataRes?.response?.price * formData.seatNo) * response.data.response.service_fee / 100)).toFixed(2);
-
-        setServiceFee(serviceFee);
         let flat_fee = Number(response?.data?.response?.flat_fee * formData.seatNo);
         setFlatFee(flat_fee);
+        let serviceFee = Number((Number(eventDataRes?.response?.price * formData.seatNo) * response.data.response.service_fee / 100)+flat_fee).toFixed(2);
+
+        setServiceFee(serviceFee);
+        
         let paymentFee = Number(((Number(eventDataRes?.response?.price * formData.seatNo)) * response.data.response.payment_fee / 100)).toFixed(2);
         setPaymentFee(paymentFee);
-        setTotalPayment((Number(eventDataRes?.response?.price * formData.seatNo) + Number(serviceFee) + Number(paymentFee) + Number(flat_fee)).toFixed(2));
+        setTotalPayment((Number(eventDataRes?.response?.price * formData.seatNo) + Number(serviceFee) + Number(paymentFee)).toFixed(2));
       })
       .catch(function (error) {
         console.log(error);
@@ -224,17 +225,18 @@ export default ({
     console.log(e.target);
     if (name == 'seatNo') {
 
+      let flat_fee = Number(paymentConfig.response.flat_fee * value);
+      setFlatFee(flat_fee)
       value = Math.max(0, Math.min(Number(eventData.response.total_seat - eventData.response.booked_seat), Number(value)));
-      let serviceFee = Number((Number(eventData.response.price * value) * paymentConfig.response.service_fee / 100)).toFixed(2);
+      let serviceFee = Number((Number(eventData.response.price * value) * paymentConfig.response.service_fee / 100)+flat_fee).toFixed(2);
       // if (value > 0) {
       //   serviceFee = (Number(serviceFee) + Number(value * paymentConfig.response.total_additional_charges)).toFixed(2);
       // }
-      let flat_fee = Number(paymentConfig.response.flat_fee * value);
-      setFlatFee(flat_fee)
-      setServiceFee(serviceFee+flat_fee);
+      
+      setServiceFee(serviceFee);
       let paymentFee = Number(((Number(eventData.response.price * value)) * paymentConfig.response.payment_fee / 100)).toFixed(2);
       setPaymentFee(paymentFee);
-      setTotalPayment((Number(eventData.response.price * value) + Number(serviceFee) + Number(paymentFee) + Number(flat_fee)).toFixed(2));
+      setTotalPayment((Number(eventData.response.price * value) + Number(serviceFee) + Number(paymentFee)).toFixed(2));
     }
 
     setFormData({
