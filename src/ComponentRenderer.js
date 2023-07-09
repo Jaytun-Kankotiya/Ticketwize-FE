@@ -51,6 +51,8 @@ import SimplePrimaryBackgroundTestimonial from "./components/testimonials/Simple
 
 import SimpleAboutUs from "./components/about/SimpleAboutUs";
 
+import SimplePrivacyPolicy from "./components/privacypolicy/SimplePrivacyPolicy";
+
 import SimpleWithSideImageFAQS from "./components/faqs/SimpleWithSideImage.js";
 import SingleColFAQS from "./components/faqs/SingleCol.js";
 import TwoColumnPrimaryBackgroundFAQS from "./components/faqs/TwoColumnPrimaryBackground.js";
@@ -347,9 +349,20 @@ export const components = {
           name: "Event Tickets",
           component: eventTicket,
           url: "/components/blocks/About/eventTicket",
+        },
+      },
+      PrivacyPolicy: {
+        type: "Privacy Policy",
+        elements: {
+          SimplePrivacyPolicy: {
+            name: "Simple Privacy Policy Page",
+            component: SimplePrivacyPolicy,
+            url: "/components/blocks/PrivacyPolicy/SimplePrivacyPolicy",
+          }
         }
-      }
+      },
     },
+
     Payment: {
       type: "Payment Status",
       elements: {
@@ -452,6 +465,9 @@ export default () => {
   try {
     let Component = null;
     if (type === "blocks" && subtype) {
+      console.log("467-----", type)
+      console.log("468-----", subtype)
+      console.log("469-----", name)
       Component = components[type][subtype]["elements"][name].component
       return <AnimationRevealPage disabled>
         <Component />
