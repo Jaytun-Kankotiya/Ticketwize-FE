@@ -51,6 +51,8 @@ import SimplePrimaryBackgroundTestimonial from "./components/testimonials/Simple
 
 import SimpleAboutUs from "./components/about/SimpleAboutUs";
 
+import SimplePrivacyPolicy from "./components/privacypilicy/SimplePrivacyPolicy";
+
 import SimpleWithSideImageFAQS from "./components/faqs/SimpleWithSideImage.js";
 import SingleColFAQS from "./components/faqs/SingleCol.js";
 import TwoColumnPrimaryBackgroundFAQS from "./components/faqs/TwoColumnPrimaryBackground.js";
@@ -336,6 +338,16 @@ export const components = {
           name: "Simple About Us Page",
           component: SimpleAboutUs,
           url: "/components/blocks/About/SimpleAboutUs",
+        }
+      }
+    },
+    PrivacyPolicy: {
+      type: "Privacy Policy Section",
+      elements: {
+        SimplePrivacyPolicy: {
+          name: "Simple Privacy Policy Page",
+          component: SimplePrivacyPolicy,
+          url: "/components/blocks/PrivacyPolicy/SimplePrivacyPolicy",
         }
       }
     },

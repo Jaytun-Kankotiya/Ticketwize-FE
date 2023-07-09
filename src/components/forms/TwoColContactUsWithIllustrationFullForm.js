@@ -67,10 +67,10 @@ export default ({
         setPaymentConfig(response.data);
         let flat_fee = Number(response?.data?.response?.flat_fee * formData.seatNo);
         setFlatFee(flat_fee);
-        let serviceFee = Number((Number(eventDataRes?.response?.price * formData.seatNo) * response.data.response.service_fee / 100)+flat_fee).toFixed(2);
+        let serviceFee = Number((Number(eventDataRes?.response?.price * formData.seatNo) * response.data.response.service_fee / 100) + flat_fee).toFixed(2);
 
         setServiceFee(serviceFee);
-        
+
         let paymentFee = Number(((Number(eventDataRes?.response?.price * formData.seatNo)) * response.data.response.payment_fee / 100)).toFixed(2);
         setPaymentFee(paymentFee);
         setTotalPayment((Number(eventDataRes?.response?.price * formData.seatNo) + Number(serviceFee) + Number(paymentFee)).toFixed(2));
@@ -224,15 +224,14 @@ export default ({
     console.log("e.target.==");
     console.log(e.target);
     if (name == 'seatNo') {
-
-      let flat_fee = Number(paymentConfig.response.flat_fee * value);
-      setFlatFee(flat_fee)
       value = Math.max(0, Math.min(Number(eventData.response.total_seat - eventData.response.booked_seat), Number(value)));
-      let serviceFee = Number((Number(eventData.response.price * value) * paymentConfig.response.service_fee / 100)+flat_fee).toFixed(2);
+      value = (value + "").length > 0 && Number((value + "")[0]) == 0 ? (value + "").substr(1) : value;
       // if (value > 0) {
       //   serviceFee = (Number(serviceFee) + Number(value * paymentConfig.response.total_additional_charges)).toFixed(2);
       // }
-      
+      let flat_fee = Number(paymentConfig.response.flat_fee * value);
+      setFlatFee(flat_fee)
+      let serviceFee = Number((Number(eventData.response.price * value) * paymentConfig.response.service_fee / 100) + flat_fee).toFixed(2);
       setServiceFee(serviceFee);
       let paymentFee = Number(((Number(eventData.response.price * value)) * paymentConfig.response.payment_fee / 100)).toFixed(2);
       setPaymentFee(paymentFee);
@@ -294,7 +293,7 @@ export default ({
               {formData.genderError && <small style={{ textAlign: 'left', marginTop: 5, color: 'red' }}>{formData.genderError}</small>}
               {/* we will add later for multi-day event  */}
               {/* <Input type="date" id="dob" name="dob"  />  */}
-              <Input type="number" name="seatNo" value={formData.seatNo} step={1} placeholder="No of seats" min={0} max={eventData.response.total_seat - eventData.response.booked_seat} onInput={(e) => e.target.value = e.target.value.slice(0, 4)} onChange={onChangeTextValue} />
+              <Input type="number" name="seatNo" value={formData.seatNo} placeholder="No of seats" max={eventData.response.total_seat - eventData.response.booked_seat} onInput={(e) => e.target.value = e.target.value.slice(0, 4)} onChange={onChangeTextValue} />
               {formData.seatNoError && <small style={{ textAlign: 'left', marginTop: 5, color: 'red' }}>{formData.seatNoError}</small>}
               <br />
               <br />
