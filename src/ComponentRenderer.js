@@ -72,6 +72,7 @@ import MiniCenteredFooter from "./components/footers/MiniCenteredFooter.js";
 
 import PaymentSuccess from "./components/payment/PaymentSuccess.js"
 import PaymentCancle from "./components/payment/PaymentCancle.js"
+import eventTicket from './components/ticket/eventTicket.js';
 export const components = {
   landingPages: {
     EventLandingPage: {
@@ -336,6 +337,16 @@ export const components = {
           name: "Simple About Us Page",
           component: SimpleAboutUs,
           url: "/components/blocks/About/SimpleAboutUs",
+        }
+      }
+    },
+    ticket: {
+      type: "event Ticekt",
+      elements: {
+        eventTicket: {
+          name: "Event Tickets",
+          component: eventTicket,
+          url: "/components/blocks/About/eventTicket",
         }
       }
     },
