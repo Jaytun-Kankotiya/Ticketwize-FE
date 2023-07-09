@@ -2,9 +2,6 @@ import React, { useEffect } from "react";
 import AnimationRevealPage from "./../helpers/AnimationRevealPage.js";
 import Hero from "./../components/hero/BackgroundAsImageWithCenteredContent.js";
 import Features from "./../components/features/VerticalWithAlternateImageAndText.js";
-import Blog from "./../components/blogs/ThreeColSimpleWithImage.js";
-import Testimonial from "./../components/testimonials/TwoColumnWithImage.js";
-import ContactUsForm from "./../components/forms/SimpleContactUs.js";
 import Footer from "./../components/footers/SimpleFiveColumn.js";
 import axios from "axios";
 import * as configData from '../config/constants.js';
@@ -33,9 +30,6 @@ export default () => {
       <AnimationRevealPage>
         <Hero event={event} />
         <Features event={event} />
-        {/* <Blog event={event} /> */}
-        {/* <Testimonial event={event} /> */}
-        {/* <ContactUsForm event={event} /> */}
         <Footer />
       </AnimationRevealPage>
     );
