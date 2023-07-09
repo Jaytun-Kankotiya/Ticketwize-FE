@@ -57,6 +57,7 @@ export default () => {
               <Link href="/">Home</Link>
             </LinkListItem>
             <LinkListItem>
+              {/* <Link href="/components/blocks/PrivacyPolicy/SimplePrivacyPolicy">Privacy Policy</Link> */}
               <Link href="/components/blocks/PrivacyPolicy/SimplePrivacyPolicy">Privacy Policy</Link>
             </LinkListItem>
             <LinkListItem>

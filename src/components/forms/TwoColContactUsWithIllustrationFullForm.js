@@ -182,6 +182,7 @@ export default ({
         dob: null,
         gender: formData.gender
       }
+        localStorage.setItem('email', JSON.stringify(data.email));
       let stripe_url;
       axios.post(configData.API_URL + 'api/v1/event/register', data)
         .then(function (response) {
@@ -215,6 +216,8 @@ export default ({
         genderError,
         seatNoError
       });
+      
+      
     }
   }
 
@@ -285,9 +288,9 @@ export default ({
 
               <Select name="gender" tabIndex="-98" value={formData.gender} onChange={onChangeTextValue}>
                 <option key={0} value="">Select Gender</option>
-                <option key={1} value="M">Male</option>
-                <option key={2} value="F">Female</option>
-                <option key={3} value="O">Other</option>
+                <option key={1} value="Male">Male</option>
+                <option key={2} value="Female">Female</option>
+                <option key={3} value="Other">Other</option>
                 <option key={4} value="N">Prefer not to Answer</option>
               </Select>
               {formData.genderError && <small style={{ textAlign: 'left', marginTop: 5, color: 'red' }}>{formData.genderError}</small>}

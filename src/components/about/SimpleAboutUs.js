@@ -12,6 +12,7 @@ const Heading = tw(SectionHeading)`lg:text-left text-primary-500`;
 const Description = tw.p`max-w-xl text-center mx-auto lg:mx-0 lg:text-left lg:max-w-none leading-relaxed text-sm sm:text-base lg:text-lg font-medium mt-4 text-secondary-100`;
 
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default ({
     heading = "About Us",
 }) => {
