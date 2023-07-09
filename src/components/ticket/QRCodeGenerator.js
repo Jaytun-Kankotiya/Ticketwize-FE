@@ -1,21 +1,13 @@
 import React from 'react';
 import QRCode from 'qrcode.react';
-const QRCodeGenerator = () => {
-    const [url, setUrl] = React.useState('');
-  
-    
-    // Function to handle changes in the input field
-    const handleInputChange = (event) => {
-      setUrl(event.target.value);
-    };
-    console.log(url)
+function QRCodeGenerator({ url }) {
     return (
       <div>
-        <input type="text" value={url} onChange={handleInputChange} />
+        <h2>QR Code</h2>
         <QRCode value={url} />
       </div>
     );
-  };
+  }
   
   export default QRCodeGenerator;
   

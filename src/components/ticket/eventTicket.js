@@ -34,39 +34,45 @@ const PrimaryAction = tw.button`text-center lg:text-center rounded-full px-8 py-
 
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default () => {
+export default function EventTicket() {
     /*
      * Using gtag like this because we only want to use Google Analytics when Main Landing Page is rendered
      * Remove this part and the the gtag script inside public/index.html if you dont need google analytics
      */
-
-    // const [eventId, setEventId] = useState('');
-    // const [emailId, setEmailId] = useState('');
-    // const [userEventId, setuserEventId] = useState('');
-    const [qrDetials, setQRDetails] =  React.useState(null);
+    const [eventId, setEventId] =  useState({});
+    const [emailId, setEmailId] =  useState([]);
+    const [userEventId, setuserEventId] = useState([]);
+    const [qrDetials, setQRDetails] = useState([]);
     const urlParams = new URLSearchParams(window.location.search);
     const event_id = urlParams.get('event_id');
     const email = urlParams.get('event_id');
     const user_event_id = urlParams.get('user_event_id');
-    // setEventId(event_id);
-    // setEmailId(email);
-    // setuserEventId(user_event_id);
-    
-    console.log("5------", qrDetials)
 
 
-    if(!qrDetials){
+
+
+
     useEffect(() => {
         axios.get(configData.API_URL + 'api/v1/user/fetch/tickets?event_id=' + event_id + '&email=' + email + '&user_event_id=' + user_event_id)
             .then(function (response) {
                 setQRDetails(response.data);
+                setEventId(event_id);
+                setEmailId(email);
+                setuserEventId(user_event_id);
             })
             .catch(function (error) {
                 console.log(error);
             });
-    }, [qrDetials]);
-    
-
+    }, []);
+    if(qrDetials){
+        console.log("73-----")
+        // console.log(qrDetials.response.length)
+        const rows = [];
+// for (let i = 0; i < qrDetials.response.length; i++) {
+    // note: we are adding a key prop here to allow react to uniquely identify each
+    // element in this array. see: https://reactjs.org/docs/lists-and-keys.html
+    // rows.push(<QRCodeGenerator key={i} />);
+// }
     return (
 
         <AnimationRevealPage disabled>
@@ -85,10 +91,11 @@ export default () => {
                 <PrimaryAction>Current Event</PrimaryAction>
               </NavLink>
             </TextColumn> */}
+                        {/* for (const payment in qrDetials.response) { */}
 
                         <TextColumn>
                             <React.StrictMode>
-                                <QRCodeGenerator />
+                                <QRCodeGenerator/>
                             </React.StrictMode>,
                         </TextColumn>
                         <ImageColumn>
@@ -104,3 +111,5 @@ export default () => {
     );
         }
 };
+
+// export default EventTicket();

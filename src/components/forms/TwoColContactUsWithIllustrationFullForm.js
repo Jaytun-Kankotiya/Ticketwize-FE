@@ -182,6 +182,7 @@ export default ({
         dob: null,
         gender: formData.gender
       }
+        localStorage.setItem('email', JSON.stringify(data.email));
       let stripe_url;
       axios.post(configData.API_URL + 'api/v1/event/register', data)
         .then(function (response) {
@@ -215,6 +216,8 @@ export default ({
         genderError,
         seatNoError
       });
+      
+      
     }
   }
 
