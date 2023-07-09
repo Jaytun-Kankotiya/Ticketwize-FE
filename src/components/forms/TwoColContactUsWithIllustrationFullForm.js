@@ -284,10 +284,10 @@ export default ({
 
               <Select name="gender" tabIndex="-98" value={formData.gender} onChange={onChangeTextValue}>
                 <option key={0} value="">Select Gender</option>
-                <option key={1} value="male">Male</option>
-                <option key={2} value="female">Female</option>
-                <option key={3} value="other">Other</option>
-                <option key={4} value="Prefer not to answer">Prefer not to Answer</option>
+                <option key={1} value="M">Male</option>
+                <option key={2} value="F">Female</option>
+                <option key={3} value="O">Other</option>
+                <option key={4} value="N">Prefer not to Answer</option>
               </Select>
               {formData.genderError && <small style={{ textAlign: 'left', marginTop: 5, color: 'red' }}>{formData.genderError}</small>}
               {/* we will add later for multi-day event  */}
