@@ -45,12 +45,8 @@ const SubmitButton = tw(PrimaryButtonBase)`inline-block mt-8`
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default ({
-  subheading = "Reserve Seats",
-  heading = "",
   description = <>Please fill below form and <span tw="text-primary-500">confirm your seats</span><wbr /> with us.</>,
   submitButtonText = "Buy Now",
-  formAction = configData.API_URL + 'api/v1/event/register',
-  formMethod = "POST",
   textOnLeft = true,
 }) => {
   const [event_id, setEventId] = useState([]);
@@ -70,11 +66,13 @@ export default ({
       .then(function (response) {
         setPaymentConfig(response.data);
         let serviceFee = Number((Number(eventDataRes?.response?.price * formData.seatNo) * response.data.response.service_fee / 100)).toFixed(2);
-        serviceFee = (Number(serviceFee) + Number(formData.seatNo * response.data.response.total_additional_charges)).toFixed(2);
+
         setServiceFee(serviceFee);
-        let paymentFee = Number(((Number(eventDataRes?.response?.price * formData.seatNo) + Number(serviceFee)) * response.data.response.payment_fee / 100)).toFixed(2);
+        let flat_fee = Number(response?.data?.response?.flat_fee * formData.seatNo);
+        setFlatFee(flat_fee);
+        let paymentFee = Number(((Number(eventDataRes?.response?.price * formData.seatNo)) * response.data.response.payment_fee / 100)).toFixed(2);
         setPaymentFee(paymentFee);
-        setTotalPayment((Number(eventDataRes?.response?.price * formData.seatNo) + Number(serviceFee) + Number(paymentFee)).toFixed(2));
+        setTotalPayment((Number(eventDataRes?.response?.price * formData.seatNo) + Number(serviceFee) + Number(paymentFee) + Number(flat_fee)).toFixed(2));
       })
       .catch(function (error) {
         console.log(error);
@@ -98,7 +96,9 @@ export default ({
 
   const [serviceFee, setServiceFee] = useState(0);
   const [paymentFee, setPaymentFee] = useState(0);
+  const [flatFee, setFlatFee] = useState(0);
   const [totalPayment, setTotalPayment] = useState(0);
+
   const [formData, setFormData] = useState({
     email: "",
     emailError: "",
@@ -181,7 +181,6 @@ export default ({
         dob: null,
         gender: formData.gender
       }
-      console.log(data);
       let stripe_url;
       axios.post(configData.API_URL + 'api/v1/event/register', data)
         .then(function (response) {
@@ -226,15 +225,16 @@ export default ({
     if (name == 'seatNo') {
 
       value = Math.max(0, Math.min(Number(eventData.response.total_seat - eventData.response.booked_seat), Number(value)));
-
       let serviceFee = Number((Number(eventData.response.price * value) * paymentConfig.response.service_fee / 100)).toFixed(2);
-      if (value > 0) {
-        serviceFee = (Number(serviceFee) + Number(value * paymentConfig.response.total_additional_charges)).toFixed(2);
-      }
+      // if (value > 0) {
+      //   serviceFee = (Number(serviceFee) + Number(value * paymentConfig.response.total_additional_charges)).toFixed(2);
+      // }
+      let flat_fee = Number(paymentConfig.response.flat_fee * value);
+      setFlatFee(flat_fee)
       setServiceFee(serviceFee);
-      let paymentFee = Number(((Number(eventData.response.price * value) + Number(serviceFee)) * paymentConfig.response.payment_fee / 100)).toFixed(2);
+      let paymentFee = Number(((Number(eventData.response.price * value)) * paymentConfig.response.payment_fee / 100)).toFixed(2);
       setPaymentFee(paymentFee);
-      setTotalPayment((Number(eventData.response.price * value) + Number(serviceFee) + Number(paymentFee)).toFixed(2));
+      setTotalPayment((Number(eventData.response.price * value) + Number(serviceFee) + Number(paymentFee) + Number(flat_fee)).toFixed(2));
     }
 
     setFormData({
@@ -300,6 +300,7 @@ export default ({
               <TextContent> Ticket Price:  <span style={{ fontWeight: 'bold' }}>${eventData.response.price} x {formData.seatNo > 0 ? formData.seatNo : "0"}</span></TextContent>
               <TextContent> Service Charge: <span style={{ fontWeight: 'bold' }}>{formData.seatNo > 0 ? `$${serviceFee}` : "$0"}</span></TextContent>
               <TextContent> Processing Charge: <span style={{ fontWeight: 'bold' }}>{formData.seatNo > 0 ? `$${paymentFee}` : "$0"}</span></TextContent>
+              {/* <TextContent> Flat Fee: <span style={{ fontWeight: 'bold' }}>{formData.seatNo > 0 ? `$${flatFee}` : "$0"}</span></TextContent> */}
               <div style={{ height: 1, width: '100%', backgroundColor: 'rgb(226, 232, 240)', marginTop: 10, marginBottom: 10 }}></div>
               <TextContent> Total Amount:  <span style={{ fontWeight: 'bold' }}>${totalPayment}</span></TextContent>
               {/* <Textarea name="message" placeholder="Your Message Here" /> */}
