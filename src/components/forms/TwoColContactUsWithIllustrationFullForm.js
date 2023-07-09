@@ -231,7 +231,7 @@ export default ({
       // }
       let flat_fee = Number(paymentConfig.response.flat_fee * value);
       setFlatFee(flat_fee)
-      setServiceFee(serviceFee);
+      setServiceFee(serviceFee+flat_fee);
       let paymentFee = Number(((Number(eventData.response.price * value)) * paymentConfig.response.payment_fee / 100)).toFixed(2);
       setPaymentFee(paymentFee);
       setTotalPayment((Number(eventData.response.price * value) + Number(serviceFee) + Number(paymentFee) + Number(flat_fee)).toFixed(2));
