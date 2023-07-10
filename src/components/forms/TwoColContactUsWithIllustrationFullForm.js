@@ -70,8 +70,9 @@ export default ({
         let serviceFee = Number((Number(eventDataRes?.response?.price * formData.seatNo) * response.data.response.service_fee / 100) + flat_fee).toFixed(2);
 
         setServiceFee(serviceFee);
-
-        let paymentFee = Number(((Number(eventDataRes?.response?.price * formData.seatNo)) * response.data.response.payment_fee / 100)).toFixed(2);
+       
+        // let paymentFee = Number(((Number(eventDataRes?.response?.price * formData.seatNo)+serviceFee) * (response.data.response.payment_fee / 100))).toFixed(2);
+        let paymentFee = ((Number(((Number(eventDataRes?.response?.price * formData.seatNo)+(serviceFee+1))/10)+1) * (response.data.response.payment_fee))/100).toFixed(2);
         setPaymentFee(paymentFee);
         setTotalPayment((Number(eventDataRes?.response?.price * formData.seatNo) + Number(serviceFee) + Number(paymentFee)).toFixed(2));
       })
@@ -236,7 +237,10 @@ export default ({
       setFlatFee(flat_fee)
       let serviceFee = Number((Number(eventData.response.price * value) * paymentConfig.response.service_fee / 100) + flat_fee).toFixed(2);
       setServiceFee(serviceFee);
-      let paymentFee = Number(((Number(eventData.response.price * value)) * paymentConfig.response.payment_fee / 100)).toFixed(2);
+      // let paymentFee = Number(((Number(eventData.response.price * value)) * paymentConfig.response.payment_fee / 100)).toFixed(2);
+      let paymentFee = Number((((Number(eventData.response.price * value))+(Number(serviceFee))) * paymentConfig.response.payment_fee / 100)).toFixed(2);
+      
+      // ((Number(eventData.response.price * value))+(Number(serviceFee)))) 
       setPaymentFee(paymentFee);
       setTotalPayment((Number(eventData.response.price * value) + Number(serviceFee) + Number(paymentFee)).toFixed(2));
     }
