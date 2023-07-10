@@ -87,9 +87,6 @@ export const components = {
 
   innerPages: {
 
-
-
-
   },
 
   blocks: {
@@ -351,16 +348,17 @@ export const components = {
           url: "/components/blocks/About/eventTicket",
         },
       },
-      PrivacyPolicy: {
-        type: "Privacy Policy",
-        elements: {
-          SimplePrivacyPolicy: {
-            name: "Simple Privacy Policy Page",
-            component: SimplePrivacyPolicy,
-            url: "/components/blocks/PrivacyPolicy/SimplePrivacyPolicy",
-          }
+      
+    },
+    PrivacyPolicy: {
+      type: "Privacy Policy",
+      elements: {
+        SimplePrivacyPolicy: {
+          name: "Simple Privacy Policy Page",
+          component: SimplePrivacyPolicy,
+          url: "/components/blocks/PrivacyPolicy/SimplePrivacyPolicy",
         }
-      },
+      }
     },
 
     Payment: {

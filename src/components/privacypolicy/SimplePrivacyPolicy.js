@@ -36,7 +36,7 @@ export default ({
 
                     <SubHeading>USE OF COLLECTED INFORMATION</SubHeading>
                     <SubTitle>Personal Information:</SubTitle>
-                    <Description>Ticketwize is not contain any personal information, financial transactions, credit card number and cookies.</Description>
+                    <Description>Ticketwize is not contain any financial transactions, credit card number and cookies.</Description>
                     <SubTitle>Security:</SubTitle>
                     <Description>Ticketwize use only Stripe for financial transaction, Stripe is a suite of APIs powering online payment processing and commerce solutions for internet businesses of all sizes. Protect yourself from fraud and increase authorization rates on every payment using our machine learning and data from millions of businesses.</Description>
                     <Description>By completing this registration form, you consent to Ticketwize using and disclosing the information you submit, as described in the preceding paragraphs.</Description>
