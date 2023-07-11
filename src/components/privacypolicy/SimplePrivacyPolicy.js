@@ -1,19 +1,19 @@
 import React from "react";
 import tw from "twin.macro";
-import { SectionHeading, Subheading as SubheadingBase } from "./../misc/Headings.js";
+import { SectionHeading } from "./../misc/Headings.js";
 import Footer from "./../../components/footers/SimpleFiveColumn.js";
 
 const Container = tw.div`relative`;
 const Content = tw.div`max-w-screen-xl mx-auto py-10 lg:py-10`;
 
 const FAQContent = tw.div``;
-const Subheading = tw(SubheadingBase)`mb-4 text-center lg:text-left`;
 const Heading = tw(SectionHeading)`lg:text-left text-primary-500`;
 const SubHeading = tw(SectionHeading)`text-xl sm:text-2xl mt-5 lg:text-left text-primary-500`;
 const SubTitle = tw(SectionHeading)`text-xl sm:text-xl mt-2 lg:text-left`;
 const Description = tw.p`max-w-xl text-center mx-auto lg:mx-0 lg:text-left lg:max-w-none leading-relaxed text-sm sm:text-base lg:text-lg font-medium mt-4 text-secondary-100`;
 
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default ({
     heading = "Privacy Policy",
 }) => {

@@ -1,12 +1,6 @@
 import React from "react";
 import tw from "twin.macro";
-import styled from "styled-components";
-import { css } from "styled-components/macro"; //eslint-disable-line
-
-import LogoImage from "../../images/logo-hz.png";
-import { ReactComponent as FacebookIcon } from "../../images/facebook-icon.svg";
-import { ReactComponent as TwitterIcon } from "../../images/twitter-icon.svg";
-import { ReactComponent as YoutubeIcon } from "../../images/youtube-icon.svg";
+import LogoImage from "../../images/ticketwize_logo_purple_horizontal.png";
 import moment from "moment";
 
 const Container = tw.div`relative bg-gray-200 -mx-8 -mb-8 px-8`;
@@ -17,7 +11,6 @@ const WideColumn = tw(Column)`text-center md:text-left w-full md:w-2/5 mb-10 md:
 
 const LogoContainer = tw.div`flex items-center justify-center md:justify-start`;
 const LogoImg = tw.img`w-1/3`;
-const LogoText = tw.h5`text-xl font-black text-primary-500`;
 
 const CopyrightText = tw.h5`ml-2 text-center pb-10 text-sm`;
 
@@ -28,14 +21,6 @@ const LinkListItem = tw.li`mt-4`;
 const Link = tw.a`border-b-2 border-transparent hocus:border-gray-100 pb-1 transition duration-300`;
 
 const CompanyDescription = tw.p`mt-4 max-w-xs font-medium text-sm mx-auto md:mx-0 md:mr-4 `;
-
-const SocialLinksContainer = tw.div`mt-4 `;
-const SocialLink = styled.a`
-  ${tw`cursor-pointer inline-block p-2 rounded-full bg-gray-700 text-gray-100 hover:bg-gray-900 transition duration-300 mr-4`}
-  svg {
-    ${tw`w-4 h-4`}
-  }
-`;
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default () => {

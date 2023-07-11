@@ -2,11 +2,11 @@ import React from "react";
 import AnimationRevealPage from "./helpers/AnimationRevealPage.js";
 import { Container, Content2Xl } from "./components/misc/Layouts";
 import tw from "twin.macro";
-import { LogoLink, NavLink as LightNavLink } from "./components/headers/light.js";
+import { LogoLink} from "./components/headers/light.js";
 import { SectionDescription as DescriptionBase } from "./components/misc/Typography";
 import Footer from "./components/footers/SimpleFiveColumn.js";
 import heroScreenshotImageSrc from "./images/demo/MainLandingPageHero.png";
-import logo from "./images/logo-hz.png";
+import logo from "./images/ticketwize_logo_purple_horizontal.png";
 
 /* Hero */
 const Row = tw.div`flex`;
