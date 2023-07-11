@@ -32,15 +32,7 @@ const Description = tw.p`mt-4 text-center md:text-left text-sm md:text-base lg:t
 
 const Form = tw.form`mt-8 md:mt-10 text-sm flex flex-col max-w-sm mx-auto md:mx-0`
 const Input = tw.input`mt-6 first:mt-0 border-2 px-5 rounded-l py-3 focus:outline-none font-medium transition duration-300 hocus:border-primary-500`
-// const H1 = tw.input`mt-6 first:mt-0 focus:outline-none font-medium transition duration-300 hocus:border-primary-500`
-
-const Textarea = styled(Input).attrs({ as: "textarea" })`
-  ${tw`h-24`}
-`
 const Select = styled(Input).attrs({ as: "select" })``;
-
-const NumberInput = styled(Input).attrs({ type: "number" })``;
-
 const SubmitButton = tw(PrimaryButtonBase)`inline-block mt-8`
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -71,7 +63,6 @@ export default ({
 
         setServiceFee(serviceFee);
        
-        // let paymentFee = Number(((Number(eventDataRes?.response?.price * formData.seatNo)+serviceFee) * (response.data.response.payment_fee / 100))).toFixed(2);
         let paymentFee = ((Number(((Number(eventDataRes?.response?.price * formData.seatNo)+(serviceFee+1))/10)+1) * (response.data.response.payment_fee))/100).toFixed(2);
         setPaymentFee(paymentFee);
         setTotalPayment((Number(eventDataRes?.response?.price * formData.seatNo) + Number(serviceFee) + Number(paymentFee)).toFixed(2));
@@ -227,20 +218,14 @@ export default ({
     let value = e.target.value;
     console.log("e.target.==");
     console.log(e.target);
-    if (name == 'seatNo') {
+    if (name === 'seatNo') {
       value = Math.max(0, Math.min(Number(eventData.response.total_seat - eventData.response.booked_seat), Number(value)));
-      value = (value + "").length > 0 && Number((value + "")[0]) == 0 ? (value + "").substr(1) : value;
-      // if (value > 0) {
-      //   serviceFee = (Number(serviceFee) + Number(value * paymentConfig.response.total_additional_charges)).toFixed(2);
-      // }
+      value = (value + "").length > 0 && Number((value + "")[0]) === 0 ? (value + "").substr(1) : value;
       let flat_fee = Number(paymentConfig.response.flat_fee * value);
       setFlatFee(flat_fee)
       let serviceFee = Number((Number(eventData.response.price * value) * paymentConfig.response.service_fee / 100) + flat_fee).toFixed(2);
       setServiceFee(serviceFee);
-      // let paymentFee = Number(((Number(eventData.response.price * value)) * paymentConfig.response.payment_fee / 100)).toFixed(2);
       let paymentFee = Number((((Number(eventData.response.price * value))+(Number(serviceFee))) * paymentConfig.response.payment_fee / 100)).toFixed(2);
-      
-      // ((Number(eventData.response.price * value))+(Number(serviceFee)))) 
       setPaymentFee(paymentFee);
       setTotalPayment((Number(eventData.response.price * value) + Number(serviceFee) + Number(paymentFee)).toFixed(2));
     }
