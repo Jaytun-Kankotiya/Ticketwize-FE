@@ -1,5 +1,5 @@
 
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import GlobalStyles from './styles/GlobalStyles';
 
 import ComponentRenderer from "./ComponentRenderer.js";
@@ -11,7 +11,7 @@ import MainLandingPage from "./MainLandingPage.js";
 export default function App() {
   // If you want to disable the animation just use the disabled `prop` like below on your page's component
   // return <AnimationRevealPage disabled>xxxxxxxxxx</AnimationRevealPage>;
-  
+
   return (
     <>
       <GlobalStyles />
@@ -19,7 +19,7 @@ export default function App() {
         <Routes>
           <Route path="/components/:type/:name" element={<ComponentRenderer />} />
           <Route path="/components/:type/:subtype/:name" element={<ComponentRenderer />} />
-          
+
           <Route path="/components/Payment/PaymentSuccess" element={<ComponentRenderer />} />
           <Route path="/" element={<MainLandingPage />} />
         </Routes>

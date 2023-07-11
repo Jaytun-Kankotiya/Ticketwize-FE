@@ -1,34 +1,45 @@
 import React from "react";
 import tw from "twin.macro";
-import { SectionHeading, Subheading as SubheadingBase } from "./../misc/Headings.js";
-import { Container as ContainerBase, ContentWithPaddingXl } from "./../misc/Layouts";
-import { SectionDescription } from "./../misc/Typography";
+import { SectionHeading} from "./../misc/Headings.js";
+import Footer from "./../../components/footers/SimpleFiveColumn.js";
+import { LogoLink } from "./../headers/light.js";
+import logo from "./../../images/ticketwize_logo_purple_horizontal.png";
+const Container = tw.div`relative`;
+const Content = tw.div`max-w-screen-xl mx-auto py-10 lg:py-10`;
+const Row = tw.div`flex`;
+const NavRow = tw(Row)`flex flex-col lg:flex-row items-center justify-between`;
+const FAQContent = tw.div``;
+const Heading = tw(SectionHeading)`lg:text-left text-primary-500`;
+const Description = tw.p`max-w-xl text-center mx-auto lg:mx-0 lg:text-left lg:max-w-none leading-relaxed text-sm sm:text-base lg:text-lg font-medium mt-4 text-secondary-100`;
 
-const Container = tw(ContainerBase)`my-8 lg:my-10 bg-primary-900 text-gray-100 -mx-8 px-8`;
-const HeadingContainer = tw.div``;
-const Heading = tw(SectionHeading)`sm:text-3xl md:text-4xl lg:text-5xl`;
-const Subheading = tw(SubheadingBase)`text-gray-100 text-center`;
-const Description = tw(SectionDescription)`text-gray-400 text-center mx-auto max-w-screen-md`;
-
-const StatsContainer = tw.div`mt-8 flex flex-col sm:flex-row items-center justify-center flex-wrap max-w-screen-md justify-between mx-auto`
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default ({
-  subheading = "",
-  description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  heading = "Event Registration Failed...",
 }) => {
+
   return (
     <Container>
-      <ContentWithPaddingXl>
-        <HeadingContainer>
-          {subheading && <Subheading>{subheading}</Subheading>}
-          <Heading>Ticket Booking Canceled - Continue to book around and checkout when you're ready.</Heading>
-          {description && <Description>Sorry for the inconvience...</Description>}
-        </HeadingContainer>
-        <StatsContainer>
-          
-        </StatsContainer>
-      </ContentWithPaddingXl>
+      <NavRow>
+        <LogoLink href="/">
+          <img style={{ height: 60, width: 309 }} src={logo} alt="" />
+        </LogoLink>
+      </NavRow>
+      <Content>
+
+        <FAQContent>
+          <br></br>
+          <Heading>{heading}</Heading>
+          <Description>Ticket Booking Canceled - Continue to book around and checkout when you're ready.</Description>
+          <Description>Sorry for the inconvience...</Description>
+          <Description></Description>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+        </FAQContent>
+      </Content>
+      <Footer />
     </Container>
   );
 };

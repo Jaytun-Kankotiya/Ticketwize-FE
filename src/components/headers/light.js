@@ -23,7 +23,7 @@ export const NavLinks = tw.div`inline-block`;
 export const NavLink = tw.a`
   text-lg my-2 lg:text-sm lg:mx-6 lg:my-0
   font-semibold tracking-wide transition duration-300
-  pb-1 border-b-2 border-transparent hover:border-primary-500 hocus:text-primary-500
+  pb-1 border-transparent hover:border-primary-500 hocus:text-primary-500
 `;
 
 export const PrimaryLink = tw(NavLink)`
@@ -80,7 +80,7 @@ export default ({ roundedHeaderButton = false, logoLink, links, className, colla
       <NavLink href="/#" tw="lg:ml-12!">
         Login
       </NavLink>
-      <PrimaryLink css={roundedHeaderButton && tw`rounded-full`}href="/#">Sign Up</PrimaryLink>
+      <PrimaryLink css={roundedHeaderButton && tw`rounded-full`} href="/#">Sign Up</PrimaryLink>
     </NavLinks>
   ];
 
