@@ -8,7 +8,6 @@ import { SectionHeading, Subheading as SubheadingBase } from "./../misc/Headings
 import { PrimaryButton as PrimaryButtonBase } from "./../misc/Buttons.js";
 import EmailIllustrationSrc from "./../../images/email-illustration.svg";
 import Footer from "./../../components/footers/SimpleFiveColumn.js";
-
 import * as configData from "../../config/constants.js"
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24`;
@@ -18,7 +17,6 @@ const TextColumn = styled(Column)(props => [
   tw`md:w-7/12 mt-16 md:mt-0`,
   props.textOnLeft ? tw`md:mr-12 lg:mr-16 md:order-first` : tw`md:ml-12 lg:ml-16 md:order-last`
 ]);
-
 const Image = styled.div(props => [
   `background-image: url("${props.imageSrc}");`,
   tw`rounded bg-contain bg-no-repeat bg-center h-full`,
@@ -62,8 +60,8 @@ export default ({
         let serviceFee = Number((Number(eventDataRes?.response?.price * formData.seatNo) * response.data.response.service_fee / 100) + flat_fee).toFixed(2);
 
         setServiceFee(serviceFee);
-       
-        let paymentFee = ((Number(((Number(eventDataRes?.response?.price * formData.seatNo)+(serviceFee+1))/10)+1) * (response.data.response.payment_fee))/100).toFixed(2);
+
+        let paymentFee = ((Number(((Number(eventDataRes?.response?.price * formData.seatNo) + (serviceFee + 1)) / 10) + 1) * (response.data.response.payment_fee)) / 100).toFixed(2);
         setPaymentFee(paymentFee);
         setTotalPayment((Number(eventDataRes?.response?.price * formData.seatNo) + Number(serviceFee) + Number(paymentFee)).toFixed(2));
       })
@@ -86,7 +84,14 @@ export default ({
   }, [event_id]);
 
   const [message, setMessage] = useState('');
+  const [checked, setChecked] = React.useState(false);
 
+  const handleChange = () => {
+   
+    setChecked(!checked);
+    
+  };
+  console.log("90------", checked)
   const [serviceFee, setServiceFee] = useState(0);
   const [paymentFee, setPaymentFee] = useState(0);
   const [flatFee, setFlatFee] = useState(0);
@@ -104,7 +109,8 @@ export default ({
     gender: "",
     genderError: "",
     seatNo: 1,
-    seatNoError: ""
+    seatNoError: "",
+    checked: false
   });
 
   useEffect(() => {
@@ -127,7 +133,7 @@ export default ({
   const checkout = (e) => {
     e.preventDefault();
     var isError = false;
-    let emailError = '', firstNameError = '', lastNameError = '', phoneError = '', genderError = '', seatNoError = '';
+    let emailError = '', firstNameError = '', lastNameError = '', phoneError = '', genderError = '', seatNoError = '', termsAndConditionError = '';
     if (!formData.email) {
       isError = true;
       emailError = 'Enter your email';
@@ -159,6 +165,10 @@ export default ({
       isError = true;
       genderError = 'Select your gender';
     }
+    if (checked){
+      isError = true;
+      termsAndConditionError = 'Accept the Terms and Condition';
+    }
     if (!formData.seatNo || Number(formData.seatNo) < 1) {
       isError = true;
       seatNoError = 'Enter no of seats';
@@ -174,7 +184,7 @@ export default ({
         dob: null,
         gender: formData.gender
       }
-        localStorage.setItem('email', JSON.stringify(data.email));
+      localStorage.setItem('email', JSON.stringify(data.email));
       let stripe_url;
       axios.post(configData.API_URL + 'api/v1/event/register', data)
         .then(function (response) {
@@ -206,10 +216,11 @@ export default ({
         lastNameError,
         phoneError,
         genderError,
-        seatNoError
+        seatNoError,
+        termsAndConditionError
       });
-      
-      
+
+
     }
   }
 
@@ -225,7 +236,7 @@ export default ({
       setFlatFee(flat_fee)
       let serviceFee = Number((Number(eventData.response.price * value) * paymentConfig.response.service_fee / 100) + flat_fee).toFixed(2);
       setServiceFee(serviceFee);
-      let paymentFee = Number((((Number(eventData.response.price * value))+(Number(serviceFee))) * paymentConfig.response.payment_fee / 100)).toFixed(2);
+      let paymentFee = Number((((Number(eventData.response.price * value)) + (Number(serviceFee))) * paymentConfig.response.payment_fee / 100)).toFixed(2);
       setPaymentFee(paymentFee);
       setTotalPayment((Number(eventData.response.price * value) + Number(serviceFee) + Number(paymentFee)).toFixed(2));
     }
@@ -243,6 +254,7 @@ export default ({
       <p> {message} </p>
     </section>
   }
+
   // The textOnLeft boolean prop can be used to display either the text on left or right side of the image.
   // console.log(eventData.response);
   if (payment) {
@@ -297,6 +309,10 @@ export default ({
               <div style={{ height: 1, width: '100%', backgroundColor: 'rgb(226, 232, 240)', marginTop: 10, marginBottom: 10 }}></div>
               <TextContent> Total Amount:  <span style={{ fontWeight: 'bold' }}>${totalPayment}</span></TextContent>
               {/* <Textarea name="message" placeholder="Your Message Here" /> */}
+              <label>
+                <input type="checkbox" checked={checked} onChange={handleChange} color="purple"/>  Terms and Conditions*
+              </label>
+              {formData.termsAndConditionError && <small style={{ textAlign: 'left', marginTop: 5, color: 'red' }}>{formData.termsAndConditionError}</small>}
               <SubmitButton type="submit" onClick={checkout}>{submitButtonText} </SubmitButton>
 
             </Form>
